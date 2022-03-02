@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from '../button/Button';
+import { Button } from '../../atoms/button/Button';
 import './recommendations.css';
 
 type User = {
