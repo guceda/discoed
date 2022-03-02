@@ -1,29 +1,36 @@
 export type Color = string;
 export type Rem = (number: number) => number;
 
-export interface ColorRange {
-50: Color;
-	100: Color;
-	200: Color;
-	300: Color;
-	400: Color;
-	500: Color;
-	600: Color;
-	700: Color;
-	800: Color;
-	900: Color;
-	1000: Color;
+export enum Sizes {
+	'xxsmall' = 'xxsmall',
+	'xsmall' = 'xsmall',
+	'small' = 'small',
+	'medium' = 'medium',
+	'large' = 'large',
+	'xlarge' = 'xlarge',
+	'xxlarge' = 'xxlarge',
 }
 
+export enum Ranges {
+	'_50'= '50',
+	'_100'= '100',
+	'_200'= '200',
+	'_300'= '300',
+	'_400'= '400',
+	'_500'= '500',
+	'_600'= '600',
+	'_700'= '700',
+	'_800'= '800',
+	'_900'= '900',
+	'_1000'= '1000',
+}
 
-export interface Sizes {
-xxsmall: number;
-	xsmall: number;
-	small: number;
-	medium: number;
-	large: number;
-	xlarge: number;
-	xxlarge: number;
+export type ColorRange = {
+	[key in Ranges]: Color;
+}
+
+export type Size = {
+	[key in Sizes]: number;
 }
 
 export interface PaletteColor {
@@ -36,14 +43,14 @@ export interface PaletteColor {
 export interface ThemeBase {
 	spacing: {
 		rem: Rem;
-		sizes: Sizes;
+		sizes: Size;
 	}
 	fonts: {
 		rem: Rem;
-		sizes: Sizes;
+		sizes: Size;
 	}
 	shape: {
-		borderRadius: Sizes;
+		borderRadius: Size;
 	}
 	colors: {
 		[key: string]: ColorRange;
