@@ -1,0 +1,27 @@
+{
+  "extends": ["airbnb-typescript-prettier"],
+  "rules": {
+    "no-unused-vars": "off",
+    "react/require-default-props": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-no-bind": "off",
+    "react/jsx-props-no-spreading": 0,
+    "no-shadow": "off",
+    "import/no-cycle": 0,
+    "react/jsx-boolean-value": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": ["off"],
+    "no-console": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "func-names": "off",
+    "import/prefer-default-export": "off",
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}

@@ -12,8 +12,6 @@ const Text: TextFamilyProps = ({
   style,
   ...rest
 }) => {
-
-
   const theme = useTheme();
   const fontColor = color ?? theme.palette.text;
 
@@ -25,7 +23,7 @@ const Text: TextFamilyProps = ({
         fontSize: theme.fonts.sizes[size],
         fontStyle: italic ? 'italic' : 'normal',
         color: fontColor,
-        ...style
+        ...style,
       }}
       {...rest}
     >
@@ -34,7 +32,6 @@ const Text: TextFamilyProps = ({
   );
 };
 
-
 Text.H1 = (props: VariantsProps): ReactElement => (
   <Text weight={TextualWeights.bold} {...props} size={Sizes.xxlarge} />
 );
@@ -42,10 +39,10 @@ Text.H2 = (props: VariantsProps): ReactElement => (
   <Text weight={TextualWeights.bold} {...props} size={Sizes.xlarge} />
 );
 Text.H3 = (props: VariantsProps): ReactElement => (
-  <Text  weight={TextualWeights.bold} {...props} size={Sizes.large} />
+  <Text weight={TextualWeights.bold} {...props} size={Sizes.large} />
 );
 Text.H4 = (props: VariantsProps): ReactElement => (
-  <Text  weight={TextualWeights.regular} {...props} size={Sizes.large} />
+  <Text weight={TextualWeights.regular} {...props} size={Sizes.large} />
 );
 Text.H5 = (props: VariantsProps): ReactElement => (
   <Text weight={TextualWeights.regular} {...props} size={Sizes.medium} />
@@ -60,14 +57,7 @@ Text.CopySmall = (props: VariantsProps): ReactElement => (
   <Text weight={TextualWeights.regular} {...props} size={Sizes.xxsmall} />
 );
 Text.Label = (props: Omit<VariantsProps, 'italic'>): ReactElement => (
-  <Text
-  
-    weight={TextualWeights.light} {...props}
-    size={Sizes.xxsmall}
-    italic
-  />
+  <Text weight={TextualWeights.light} {...props} size={Sizes.xxsmall} italic />
 );
-
-
 
 export default Text;

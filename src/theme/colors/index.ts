@@ -69,4 +69,4 @@ export const colors: { [key: string]: ColorRange } = {
     900: '#3B1616',
     1000: '#270F0F',
   },
-}
+};

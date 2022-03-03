@@ -8,4 +8,4 @@ export const containerStyles = (theme: Theme): CSSProperties => ({
   borderRadius: theme.shape.borderRadius.xxsmall,
   overflow: 'scroll',
   backgroundColor: theme.palette.white,
-})
+});

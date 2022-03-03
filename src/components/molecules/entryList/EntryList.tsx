@@ -5,16 +5,14 @@ import Entry, { EntryProps } from '../entry/Entry';
 import { containerStyles } from './styles';
 
 interface EntryListProps {
-	entries: EntryProps[];
+  entries: EntryProps[];
 }
 
-const EntryList: FC<EntryListProps> = ({
-  entries
-}) => {
+const EntryList: FC<EntryListProps> = ({ entries }) => {
   const theme = useTheme();
 
   return (
-    <Flex flexDirection='column' style={containerStyles(theme)}>
+    <Flex flexDirection="column" style={containerStyles(theme)}>
       {entries.map((entry) => (
         <Entry key={entry.command} {...entry} />
       ))}
