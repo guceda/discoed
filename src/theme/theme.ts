@@ -22,7 +22,7 @@ const theme: ThemeBase = {
     rem,
     sizes: {
       xxsmall: rem(0.75),
-      xsmall: rem(1),
+      xsmall: rem(0.9),
       small: rem(1.25),
       medium: rem(1.5),
       large: rem(2),
