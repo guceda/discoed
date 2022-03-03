@@ -3,7 +3,7 @@ import { useTheme } from '../../../providers/ThemeProvider';
 import Flex, { FlexProps } from '../../atoms/flex/Flex';
 import { TextualWeights } from '../../atoms/text';
 import Text from '../../atoms/text/Text';
-import { containerStyles, descriptionStyles } from './styles';
+import { containerStyles, noDataStyles, descriptionStyles } from './styles';
 
 export interface NoDataProps extends FlexProps {
   message?: string;
@@ -12,20 +12,8 @@ export interface NoDataProps extends FlexProps {
 const NoData: FC<NoDataProps> = ({ message }) => {
   const theme = useTheme();
   return (
-    <Flex
-      flexDirection="column"
-      width="100%"
-      height="100%"
-      alignItems="center"
-      style={containerStyles(theme)}
-      justifyContent="center"
-    >
-      <Flex
-        flexDirection="row"
-        justifyContent="center"
-        alignItems="center"
-        width="100%"
-      >
+    <Flex style={containerStyles(theme)}>
+      <Flex style={noDataStyles}>
         <Text.H6 weight={TextualWeights.bold} color={theme.colors.salmon[300]}>
           /
         </Text.H6>
