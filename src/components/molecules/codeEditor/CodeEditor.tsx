@@ -11,7 +11,7 @@ export interface CodeEditorProps extends FlexProps {
 const CodeEditor: FC<CodeEditorProps> = ({ content }) => {
   const theme = useTheme();
   return (
-    <Flex style={containerStyles(theme)} width="800px">
+    <Flex style={containerStyles(theme)} width="700px">
       <Editor defaultLanguage="javascript" defaultValue={content} />
     </Flex>
   );
