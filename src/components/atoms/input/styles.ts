@@ -4,7 +4,7 @@ import { Theme } from '../../../theme/types';
 export const containerStyles = (theme: Theme): CSSProperties => ({
   backgroundColor: theme.palette.alpha[100],
   padding: theme.spacing.sizes.xsmall,
-  fontSize: theme.fonts.sizes.small,
+  fontSize: theme.fonts.sizes.xsmall,
   color: theme.palette.text,
   position: 'sticky',
   top: 0,

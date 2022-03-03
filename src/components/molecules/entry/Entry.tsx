@@ -42,27 +42,27 @@ const Entry: FC<EntryProps> = ({
       width="100%"
       style={containerStyles(theme, hover)}
     >
-      <Text.H6 weight={TextualWeights.bold} color={theme.colors.salmon[600]}>
+      <Text.Copy weight={TextualWeights.bold} color={theme.colors.salmon[600]}>
         {slash ? '/' : ''}
-      </Text.H6>
+      </Text.Copy>
       <Flex flexDirection="column" width="100%">
         <Flex
           // className="sticky"
           flexDirection="row"
         >
-          <Text.H6 weight={TextualWeights.semibold}>{command}</Text.H6>
-          <Text.H6 weight={TextualWeights.regular}>
+          <Text.Copy weight={TextualWeights.semibold}>{command}</Text.Copy>
+          <Text.Copy weight={TextualWeights.regular}>
             {commandType === CommandType.inline
               ? params.join(', ')
               : `(${params.join(', ')})`}
-          </Text.H6>
+          </Text.Copy>
         </Flex>
-        <Text.H6
+        <Text.CopySmall
           color={theme.palette.alpha[700]}
           style={descriptionStyles(hover)}
         >
           {description}
-        </Text.H6>
+        </Text.CopySmall>
       </Flex>
     </Flex>
   );
