@@ -1,4 +1,4 @@
-import { FC, HTMLProps, ReactChild } from 'react';
+import { FC, HTMLProps } from 'react';
 
 type Global = 'inherit' | 'initial' | 'revert' | 'unset';
 type Alignment = 'center' | 'start' | 'end' | 'flex-start' | 'flex-end';
@@ -12,20 +12,40 @@ export interface FlexProps extends HTMLProps<HTMLDivElement> {
 	alignItems?: Alignment | Global;
 	alignContent?: Alignment | Distribution | Global;
 	flexGrow?: number | Global;
-	flexShrink?: number | Global
+	flexShrink?: number | Global;
+	gap?: string;
 	// CHILDREN
-	children?: ReactChild | ReactChild[],
+	children?: any,
 }
 
  
 const Flex: FC<FlexProps> = ({
+  flexDirection,
+  flexWrap,
+  justifyContent,
+  alignItems,
+  alignContent,
+  flexGrow,
+  flexShrink,
+  gap,
   children,
   style,
   ...props
 }) => {
 
   return (
-    <div style={{ display: 'flex', ...style, ...props }}>{children}</div>
+    <div style={{
+      display: 'flex', 
+      flexDirection,
+      flexWrap,
+      justifyContent,
+      alignItems,
+      alignContent,
+      flexGrow,
+      flexShrink,
+      gap,
+      ...style 
+    }} {...props}>{children}</div>
   );
 };
 

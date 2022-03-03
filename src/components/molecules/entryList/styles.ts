@@ -2,12 +2,7 @@ import { CSSProperties } from 'react';
 import { Theme } from '../../../theme/types';
 
 export const containerStyles = (theme: Theme): CSSProperties => ({
-  backgroundColor: theme.palette.white,
   padding: theme.spacing.sizes.medium,
+  width: '500px',
+  borderRadius: theme.shape.borderRadius.xxsmall,
 })
-
-export const descriptionStyles = {
-  // whiteSpace: 'nowrap',
-  // overflow: 'hidden',
-  // textOverflow: 'ellipsis',
-} as CSSProperties;

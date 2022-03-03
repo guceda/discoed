@@ -9,6 +9,7 @@ const Text: TextFamilyProps = ({
   size = Sizes.xsmall,
   italic = false,
   color,
+  style,
   ...rest
 }) => {
 
@@ -24,6 +25,7 @@ const Text: TextFamilyProps = ({
         fontSize: theme.fonts.sizes[size],
         fontStyle: italic ? 'italic' : 'normal',
         color: fontColor,
+        ...style
       }}
       {...rest}
     >
