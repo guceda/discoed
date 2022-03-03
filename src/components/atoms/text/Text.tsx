@@ -22,7 +22,8 @@ const Text: TextFamily = ({
   return (
     <p
       style={{
-        fontFamily: weight,
+        fontFamily: theme.fonts.family,
+        fontWeight: weight,
         fontSize: theme.fonts.sizes[size],
         fontStyle: italic ? 'italic' : 'normal',
         color: fontColor,

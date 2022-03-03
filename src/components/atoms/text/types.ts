@@ -2,10 +2,15 @@ import { FC, ReactChild, ReactElement } from 'react';
 import { Color, Sizes } from '../../../theme/types';
 
 export enum TextualWeights {
-	'light' = 'light',
-	'regular' = 'regular',
-	'bold' = 'bold',
-	'black' = 'black',
+	'thin' = 100,
+	'extralight' = 200,
+	'light' = 300,
+	'regular' = 400,
+	'medium' = 500,
+	'semibold' = 600,
+	'bold' = 700,
+	'extrabold' = 800,
+	'black' = 900,
 }
 
 export interface NestedFC<T> {
@@ -14,9 +19,9 @@ export interface NestedFC<T> {
 
 export interface TextProps {
 	children: ReactChild
-  weight: TextualWeights,
-  italic: boolean,
-  size: Sizes,
+  weight?: TextualWeights,
+  italic?: boolean,
+  size?: Sizes,
 	color?: Color,
 }
 

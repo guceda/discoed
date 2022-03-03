@@ -29,6 +29,7 @@ const theme: ThemeBase = {
       xlarge: rem(2.5),
       xxlarge: rem(3.5),
     },
+    family: 'Poppins',
   },
   shape: {
     borderRadius: {

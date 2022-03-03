@@ -48,6 +48,7 @@ export interface ThemeBase {
 	fonts: {
 		rem: Rem;
 		sizes: Size;
+		family: string;
 	}
 	shape: {
 		borderRadius: Size;
