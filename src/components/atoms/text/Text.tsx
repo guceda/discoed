@@ -1,12 +1,9 @@
 import { ReactElement } from 'react';
 import { useTheme } from '../../../providers/ThemeProvider';
 import { Sizes } from '../../../theme/types';
-import { TextFamily, TextualWeights, VariantsProps } from './types';
+import { TextFamilyProps, TextualWeights, VariantsProps } from './types';
 
-/**
- * Text component with all its variants
- */
-const Text: TextFamily = ({
+const Text: TextFamilyProps = ({
   children,
   weight = TextualWeights.regular,
   size = Sizes.xsmall,
@@ -17,7 +14,7 @@ const Text: TextFamily = ({
 
 
   const theme = useTheme();
-  const fontColor = (theme.palette as any)[color as any] ?? theme.palette.text;
+  const fontColor = color ?? theme.palette.text;
 
   return (
     <p

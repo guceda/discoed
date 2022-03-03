@@ -25,9 +25,9 @@ export interface TextProps {
 	color?: Color,
 }
 
-export type VariantsProps = Omit<TextProps, 'weight' | 'size' | 'marginHorizontal'>
+export type VariantsProps = Omit<TextProps, 'size'>
 
-export interface TextFamily extends FC<TextProps> {
+export interface TextFamilyProps extends FC<TextProps> {
 	H1: (props: VariantsProps) => ReactElement,
 	H2: (props: VariantsProps) => ReactElement,
 	H3: (props: VariantsProps) => ReactElement,

@@ -22,5 +22,8 @@
   },
   "include": [
     "src"
-  ]
+  ],
+	"paths": {
+		"@components/*": ["components/*"]
+	}
 }

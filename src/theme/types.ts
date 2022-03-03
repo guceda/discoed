@@ -11,26 +11,22 @@ export enum Sizes {
 	'xxlarge' = 'xxlarge',
 }
 
-export enum Ranges {
-	'_50'= '50',
-	'_100'= '100',
-	'_200'= '200',
-	'_300'= '300',
-	'_400'= '400',
-	'_500'= '500',
-	'_600'= '600',
-	'_700'= '700',
-	'_800'= '800',
-	'_900'= '900',
-	'_1000'= '1000',
+export type Size = {
+	[key in Sizes]: number;
 }
 
 export type ColorRange = {
-	[key in Ranges]: Color;
-}
-
-export type Size = {
-	[key in Sizes]: number;
+	50: Color;
+	100: Color;
+	200: Color;
+	300: Color;
+	400: Color;
+	500: Color;
+	600: Color;
+	700: Color;
+	800: Color;
+	900: Color;
+	1000: Color;
 }
 
 export interface PaletteColor {
