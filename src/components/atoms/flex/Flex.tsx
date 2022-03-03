@@ -23,7 +23,7 @@ export interface FlexProps extends HTMLProps<HTMLDivElement> {
   alignContent?: Alignment | Distribution | Global;
   flexGrow?: number | Global;
   flexShrink?: number | Global;
-  gap?: string;
+  gap?: number;
   // SIZE
   width?: string;
   maxWidth?: string;
@@ -65,7 +65,7 @@ const Flex: FC<FlexProps> = ({
         maxWidth,
         height,
         maxHeight,
-        gap,
+        gap: `${gap}px`,
         ...style,
       }}
       {...props}

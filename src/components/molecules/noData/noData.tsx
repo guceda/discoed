@@ -15,10 +15,17 @@ const NoData: FC<NoDataProps> = ({ message }) => {
     <Flex
       flexDirection="column"
       width="100%"
+      height="100%"
       alignItems="center"
       style={containerStyles(theme)}
+      justifyContent="center"
     >
-      <Flex flexDirection="row" justifyContent="center" width="100%">
+      <Flex
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+      >
         <Text.H6 weight={TextualWeights.bold} color={theme.colors.salmon[300]}>
           /
         </Text.H6>
@@ -29,7 +36,10 @@ const NoData: FC<NoDataProps> = ({ message }) => {
           no data
         </Text.H6>
       </Flex>
-      <Text.Copy color={theme.palette.alpha[700]} style={descriptionStyles}>
+      <Text.Copy
+        color={theme.palette.alpha[700]}
+        style={descriptionStyles(theme)}
+      >
         {message ||
           'We could not find anything with the current search. Please try again.'}
       </Text.Copy>

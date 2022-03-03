@@ -33,7 +33,7 @@ const EntryList: FC<EntryListProps> = ({ entries }) => {
         />
       </Flex>
       <Flex flexDirection="column" style={contentStyles(theme)}>
-        <Flex flexDirection="column">
+        <Flex flexDirection="column" height="100%">
           {filteredEntries.length ? (
             filteredEntries.map((entry) => (
               <Entry key={entry.command} {...entry} />
