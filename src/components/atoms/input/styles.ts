@@ -15,3 +15,7 @@ export const iconStyles = (theme: Theme): CSSProperties => ({
   paddingLeft: theme.spacing.sizes.xsmall,
   alignItems: 'center',
 });
+
+export const inputStyles = {
+  width: '100%',
+} as CSSProperties;

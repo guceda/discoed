@@ -6,7 +6,7 @@ export interface IconProps {
   width?: number;
 }
 
-const Icon: FC<IconProps> = ({ icon, height = 25, width = 25 }) => {
+const Icon: FC<IconProps> = ({ icon, height = 20, width = 20 }) => {
   return (
     <svg width={width} height={height} viewBox="0 0 8 8" fill="none">
       {icon}

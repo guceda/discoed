@@ -29,7 +29,7 @@ const EntryList: FC<EntryListProps> = ({ entries }) => {
         <Input
           icon={icons.search}
           onChange={handleSearch}
-          placeholder="type an operation"
+          placeholder="search an operation..."
         />
       </Flex>
       <Flex flexDirection="column" style={contentStyles(theme)}>
