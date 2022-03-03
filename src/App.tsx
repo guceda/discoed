@@ -20,6 +20,36 @@ const entries = [
     params:['param1', 'param2'],
     description:'This is the first command that you will ever see in your life. It is beautiful and at the same time interesting as f**k'
   },
+  {
+    command:'command0',
+    params:['param1', 'param2'],
+    description:'This is the first command that you will ever see in your life. It is beautiful and at the same time interesting as f**k'
+  },
+  {
+    command:'command1',
+    params:['param1'],
+    description:'This is the first command that you will ever see in your life. It is beautiful and at the same time interesting as f**k'
+  },
+  {
+    command:'command2',
+    params:['param1', 'param2'],
+    description:'This is the first command that you will ever see in your life. It is beautiful and at the same time interesting as f**k'
+  },
+  {
+    command:'command0',
+    params:['param1', 'param2'],
+    description:'This is the first command that you will ever see in your life. It is beautiful and at the same time interesting as f**k'
+  },
+  {
+    command:'command1',
+    params:['param1'],
+    description:'This is the first command that you will ever see in your life. It is beautiful and at the same time interesting as f**k'
+  },
+  {
+    command:'command2',
+    params:['param1', 'param2'],
+    description:'This is the first command that you will ever see in your life. It is beautiful and at the same time interesting as f**k'
+  },
 ];
 
 const App:FC = () => {

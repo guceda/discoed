@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useTheme } from '../../../providers/ThemeProvider';
 import Flex, { FlexProps } from '../../atoms/flex/Flex';
 import { TextualWeights } from '../../atoms/text';
@@ -28,16 +28,20 @@ const Entry: FC<EntryProps> = ({
   description,
 }) => {
   const theme = useTheme();
+  const [hover, setHover] = useState(false);
+
+  const handleMouseEnter = useCallback(() => setHover(true), [])
+  const handleMouseLeave = useCallback(() => setHover(false), [])
 
   return (
-    <Flex flexDirection='row' style={containerStyles(theme)}>
+    <Flex onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} flexDirection='row' width='100%' style={containerStyles(theme, hover)}>
       <Text.H6 weight={TextualWeights.bold} color={theme.colors.salmon[600]}>{slash ? '/' : ''}</Text.H6>
-      <Flex flexDirection='column'>
+      <Flex flexDirection='column' width='100%'>
         <Flex flexDirection='row'>
           <Text.H6 weight={TextualWeights.semibold}>{command}</Text.H6>
           <Text.H6 weight={TextualWeights.regular}>{commandType === CommandType.inline ? params.join(', ') : `(${params.join(', ')})`}</Text.H6>
         </Flex>
-        <Text.H6  color={theme.palette.alpha[700]} style={descriptionStyles}>{description}</Text.H6>
+        <Text.H6  color={theme.palette.alpha[700]} style={descriptionStyles(hover)}>{description}</Text.H6>
       </Flex>
     </Flex>
   );
