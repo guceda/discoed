@@ -4,6 +4,7 @@ import Flex, { FlexProps } from '../../atoms/flex/Flex';
 import { TextualWeights } from '../../atoms/text';
 import Text from '../../atoms/text/Text';
 import { containerStyles, descriptionStyles } from './styles';
+import './styles.css';
 
 enum CommandType {
   'inline' = 'inline',
@@ -45,7 +46,10 @@ const Entry: FC<EntryProps> = ({
         {slash ? '/' : ''}
       </Text.H6>
       <Flex flexDirection="column" width="100%">
-        <Flex flexDirection="row">
+        <Flex
+          // className="sticky"
+          flexDirection="row"
+        >
           <Text.H6 weight={TextualWeights.semibold}>{command}</Text.H6>
           <Text.H6 weight={TextualWeights.regular}>
             {commandType === CommandType.inline

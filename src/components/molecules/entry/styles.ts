@@ -14,7 +14,7 @@ export const containerStyles = (
 export const descriptionStyles = (hover: boolean): CSSProperties => {
   return hover
     ? {
-        height: '100px',
+        minHeight: '100px',
         // transition: 'height .5s',
       }
     : {
