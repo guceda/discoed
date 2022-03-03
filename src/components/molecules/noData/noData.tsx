@@ -21,7 +21,7 @@ const NoData: FC<NoDataProps> = ({ message }) => {
           weight={TextualWeights.semibold}
           color={theme.colors.alpha[700]}
         >
-          no data
+          nothing here
         </Text.H6>
       </Flex>
       <Text.Copy

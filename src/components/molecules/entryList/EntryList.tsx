@@ -13,7 +13,7 @@ interface EntryListProps {
 
 const EntryList: FC<EntryListProps> = ({ entries }) => {
   const theme = useTheme();
-  const [search, setSearch] = useState<string | undefined>();
+  const [search, setSearch] = useState<string>();
 
   const handleSearch = useCallback((search: string) => setSearch(search), []);
 
@@ -29,7 +29,7 @@ const EntryList: FC<EntryListProps> = ({ entries }) => {
         <Input
           icon={icons.search}
           onChange={handleSearch}
-          placeholder="search an operation..."
+          placeholder="find an operation..."
         />
       </Flex>
       <Flex flexDirection="column" style={contentStyles(theme)}>
