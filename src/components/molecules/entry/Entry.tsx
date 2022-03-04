@@ -46,7 +46,7 @@ const Entry: FC<EntryProps> = ({
       <Text.Copy weight={TextualWeights.bold} color={theme.colors.salmon[600]}>
         {slash ? '/' : ''}
       </Text.Copy>
-      <Flex flexDirection="column" width="100%">
+      <Flex flexDirection="column" width="98%">
         <Flex
           // className="sticky"
           flexDirection="row"
