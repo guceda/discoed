@@ -28,15 +28,19 @@ export default (
   targetFields: EntryProperties[],
   query?: string,
 ) => {
-  if (!query) return entries.map((entry) => ({ ...entry, highlights: [] }));
+  const queryClean = query?.toLowerCase().trim();
+  if (!queryClean)
+    return entries.map((entry) => ({ ...entry, highlights: [] }));
   return entries.map((entry) => {
     const enriched: EnrichedEntry = { ...entry, highlights: [] };
     targetFields.forEach((field) => {
       const hasField = field in enriched;
-      const isMatch = hasField && (enriched[field] as string).includes(query);
+      const isMatch =
+        hasField &&
+        (enriched[field] as string).toLowerCase().includes(queryClean);
       if (isMatch) {
         enriched.highlights.push(
-          ...getHighLights(field, enriched[field] as string, query),
+          ...getHighLights(field, enriched[field] as string, queryClean),
         );
       }
     });
