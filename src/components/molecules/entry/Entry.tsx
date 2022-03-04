@@ -41,7 +41,7 @@ const Entry: FC<EntryProps> = ({
       onMouseLeave={handleMouseLeave}
       flexDirection="row"
       width="100%"
-      style={containerStyles(theme, hover)}
+      style={containerStyles(theme, hover || open)}
     >
       <Text.Copy weight={TextualWeights.bold} color={theme.colors.salmon[600]}>
         {slash ? '/' : ''}
