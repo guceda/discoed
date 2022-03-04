@@ -7,6 +7,7 @@ export const containerStyles = (
 ): CSSProperties => ({
   backgroundColor: hover ? theme.palette.alpha[100] : theme.palette.white,
   padding: theme.spacing.sizes.medium,
+  cursor: 'pointer',
   // position: 'sticky',
   // top: 0
 });

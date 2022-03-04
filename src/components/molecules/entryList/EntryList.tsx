@@ -1,26 +1,38 @@
 import { FC, memo, useMemo, useState, useCallback } from 'react';
 import { useTheme } from '../../../providers/ThemeProvider';
-import Flex from '../../atoms/flex/Flex';
-import Input from '../../atoms/input/Input';
 import Entry, { EntryProps } from '../entry/Entry';
-import NoData from '../noData/noData';
 import { containerStyles, contentStyles, searchStyles } from './styles';
 import * as icons from '../../../assets/icons';
+import enrich from './utils/enrich';
+import { EntryProperties } from '../entry/types';
+import filter from './utils/filter';
+import sort from './utils/sort';
+import Flex from '../../atoms/flex/Flex';
+import Input from '../../atoms/input/Input';
+import NoData from '../noData/noData';
+
+const SEARCH_PROPS = ['command', 'description'] as EntryProperties[];
 
 interface EntryListProps {
-  entries: EntryProps[];
+  entries: Omit<EntryProps, 'onOpen' | 'open'>[];
 }
 
 const EntryList: FC<EntryListProps> = ({ entries }) => {
   const theme = useTheme();
-  const [search, setSearch] = useState<string>();
+  const [search, setSearch] = useState<string>('');
+  const [open, setOpen] = useState<number>();
 
   const handleSearch = useCallback((search: string) => setSearch(search), []);
+  const handleOpen = useCallback(
+    (idx) => setOpen((curr) => (curr === idx ? null : idx)),
+    [],
+  );
 
   const filteredEntries = useMemo(() => {
-    if (!search) return entries;
-    // TODO: improve search algorithm
-    return entries.filter((entry) => entry.command.includes(search));
+    const enrichedEntries = enrich(entries, SEARCH_PROPS, search);
+    const filteredEntries = filter(enrichedEntries, !!search);
+    const sortedEntries = sort(filteredEntries);
+    return sortedEntries;
   }, [entries, search]);
 
   return (
@@ -35,8 +47,14 @@ const EntryList: FC<EntryListProps> = ({ entries }) => {
       <Flex flexDirection="column" style={contentStyles(theme)}>
         <Flex flexDirection="column" height="100%">
           {filteredEntries.length ? (
-            filteredEntries.map((entry) => (
-              <Entry key={entry.command} {...entry} />
+            filteredEntries.map((entry, idx) => (
+              <Entry
+                search={search}
+                key={entry.command}
+                open={open === idx}
+                onOpen={() => handleOpen(idx)}
+                {...entry}
+              />
             ))
           ) : (
             <NoData />

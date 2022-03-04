@@ -1,3 +1,5 @@
+import { EntryType } from '../components/molecules/entry/types';
+
 export default [
   {
     command: 'command0',
@@ -53,4 +55,4 @@ export default [
     description:
       'This is the first command that you will ever see in your life. It is beautiful and at the same time interesting as f**k',
   },
-];
+] as EntryType[];
