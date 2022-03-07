@@ -29,6 +29,7 @@ const EntryList: FC<EntryListProps> = ({ entries }) => {
   );
 
   const filteredEntries = useMemo(() => {
+    // TODO: pipe here
     const enrichedEntries = enrich(entries, SEARCH_PROPS, search);
     const filteredEntries = filter(enrichedEntries, !!search);
     const sortedEntries = sort(filteredEntries);
