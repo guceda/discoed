@@ -17,7 +17,5 @@ export const contentStyles = (theme: Theme): CSSProperties => ({
 });
 
 export const searchStyles = (theme: Theme): CSSProperties => ({
-  paddingTop: theme.spacing.sizes.medium,
-  paddingRight: theme.spacing.sizes.medium,
-  paddingLeft: theme.spacing.sizes.medium,
+  padding: theme.spacing.sizes.medium,
 });
