@@ -9,8 +9,11 @@ export enum EntryProperties {
   'command' = 'command',
   'params' = 'params',
   'commandType' = 'commandType',
+  'shortDescription' = 'shortDescription',
+  'commandAction' = 'commandAction',
   'description' = 'description',
   'highlights' = 'highlights',
+  'score' = 'score',
 }
 
 export interface EntryType {
@@ -19,4 +22,7 @@ export interface EntryType {
   [EntryProperties.commandType]?: CommandType;
   [EntryProperties.description]: string;
   [EntryProperties.highlights]?: Highlight[];
+  [EntryProperties.shortDescription]: string;
+  [EntryProperties.commandAction]: 'aggregate' | 'create column';
+  [EntryProperties.score]?: number;
 }

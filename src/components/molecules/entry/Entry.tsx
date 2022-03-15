@@ -6,7 +6,11 @@ import Highlight from '../../atoms/highlight/Highlight';
 import Icon from '../../atoms/icon/Icon';
 import { TextualWeights } from '../../atoms/text';
 import Text from '../../atoms/text/Text';
-import { containerStyles, descriptionStyles } from './styles';
+import {
+  containerStyles,
+  descriptionStyles,
+  descriptionContainerStyles,
+} from './styles';
 import './styles.css';
 import { CommandType, EntryType } from './types';
 
@@ -27,6 +31,7 @@ const Entry: FC<EntryProps> = ({
   commandType = CommandType.function,
   params = [],
   description,
+  score,
 }) => {
   const theme = useTheme();
   const [hover, setHover] = useState(false);
@@ -69,12 +74,15 @@ const Entry: FC<EntryProps> = ({
             viewBox="0 0 20 20"
           />
         </Flex>
-        <Text.CopySmall
-          color={theme.palette.alpha[700]}
-          style={descriptionStyles(open)}
-        >
-          <Highlight search={search}>{description}</Highlight>
-        </Text.CopySmall>
+        <Flex style={descriptionContainerStyles}>
+          <Text.CopySmall
+            color={theme.palette.alpha[700]}
+            style={descriptionStyles(open)}
+          >
+            <Highlight search={search}>{description}</Highlight>
+          </Text.CopySmall>
+          {score && <Text.CopySmall>{score}</Text.CopySmall>}
+        </Flex>
       </Flex>
     </Flex>
   );

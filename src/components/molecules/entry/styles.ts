@@ -25,3 +25,4 @@ export const descriptionStyles = (hover: boolean): CSSProperties => {
         // height: '30px',
       };
 };
+export const descriptionContainerStyles = { gap: 10 } as CSSProperties;
