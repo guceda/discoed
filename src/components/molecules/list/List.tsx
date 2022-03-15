@@ -31,9 +31,9 @@ const List: FC<ListProps> = ({ entries }) => {
     }
     setSearching(true);
     const sortedEntries = regularSearch(entries, SEARCH_PROPS, debouncedSearch);
-    setSearching(false);
 
     if (sortedEntries.length) {
+      setSearching(false);
       setFilteredEntries(sortedEntries);
       return;
     }
