@@ -24,7 +24,6 @@ const List: FC<ListProps> = ({ entries }) => {
   const debouncedSearch = useDebounce(search, 500);
 
   useEffect(() => {
-    console.log('useEffect');
     if (debouncedSearch === '') {
       setFilteredEntries(entries);
       return;
