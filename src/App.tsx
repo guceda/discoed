@@ -2,11 +2,11 @@ import { FC, useEffect } from 'react';
 import ThemeProvider from './providers/ThemeProvider';
 import CodeEditor from './components/molecules/codeEditor/CodeEditor';
 import entries from './mock/entries';
-import './App.css';
 import Layout from './components/atoms/layout/Layout';
 import Divider from './components/atoms/divider/Divider';
 import SemanticSearchService from './services/SemanticSearchService';
 import List from './components/molecules/list/List';
+import './App.css';
 
 const App: FC = () => {
   useEffect(() => {
