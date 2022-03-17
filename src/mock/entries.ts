@@ -33,4 +33,44 @@ export default [
     description:
       'Returns only those strings that contain a specified value, ignoring case. Create column - Creates a Boolean column that shows true when the indicated value is present in the given string, ignoring case. Use the Contains (has, ->) operation if you need to discriminate between uppercase and lowercase letters.',
   },
+  {
+    command: 'alsoluteuri',
+    params: ['string'],
+    shortDescription: 'Absolute URI',
+    commandAction: 'create column, filter',
+    description:
+      'Filter - Retrieves only absolute URIs from a specified field. Create column - Creates a Boolean column that shows true if a given URI is absolute.',
+  },
+  {
+    command: 'damerau',
+    params: ['string', 'string'],
+    shortDescription: 'Edit distance: Damerau',
+    commandAction: 'create column',
+    description:
+      'Create column - Creates a new column that returns the Damerau distance between two strings.',
+  },
+  {
+    command: 'hamming',
+    params: ['string', 'string'],
+    shortDescription: 'Edit distance: Hamming',
+    commandAction: 'create column',
+    description:
+      'Create column - Creates a new column that returns the Hamming distance between two strings.',
+  },
+  {
+    command: 'levenshtein',
+    params: ['string', 'string'],
+    shortDescription: 'Edit distance: Levenshtein',
+    commandAction: 'create column',
+    description:
+      'Create column - Creates a new column that returns the Levenshtein distance between two strings.',
+  },
+  {
+    command: 'osa',
+    params: ['string', 'string'],
+    shortDescription: 'Edit distance: Osa',
+    commandAction: 'create column',
+    description:
+      'Create column - Creates a new column that returns the Osa distance between two strings.',
+  },
 ] as EntryType[];

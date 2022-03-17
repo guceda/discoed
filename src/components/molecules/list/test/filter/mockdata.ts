@@ -1,4 +1,4 @@
-import { HighLightedEntry } from '../../utils/enrich';
+import { RatedEntry } from '../../utils/rate';
 
 export const enrichedEntries = [
   {
@@ -12,6 +12,7 @@ export const enrichedEntries = [
         end: 8,
       },
     ],
+    score: 0.33,
   },
   {
     command: 'command1',
@@ -31,4 +32,4 @@ export const enrichedEntries = [
     description: 'pis, un, dos, tres',
     highlights: [],
   },
-] as HighLightedEntry[];
+] as RatedEntry[];

@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import SemanticSearchService from '../../../services/SemanticSearchService';
 import { FlexProps } from '../../atoms/flex/Flex';
 import { EntryProps } from '../entry/Entry';
@@ -6,8 +6,10 @@ import { EntryProperties } from '../entry/types';
 import EntryList, { EntryListProps } from '../entryList/EntryList';
 import useDebounce from '../entryList/hooks/useDebounce';
 import { HighLightedEntry } from './utils/enrich';
+import filter from './utils/filter';
 import regularSearch from './utils/regularSearch';
 import sort from './utils/sort';
+import { RatedEntry } from './utils/rate';
 
 export interface ListProps extends FlexProps {
   entries: Omit<EntryProps, 'onOpen' | 'open'>[];
@@ -24,21 +26,19 @@ const List: FC<ListProps> = ({ entries }) => {
 
   const debouncedSearch = useDebounce(search, 500);
 
-  const setEntries = useCallback((entries) => {
-    return setFilteredEntries(sort(entries));
-  }, []);
-
   useEffect(() => {
     if (debouncedSearch === '') {
-      setEntries(entries);
+      setFilteredEntries(entries);
       return;
     }
     setSearching(true);
-    const sortedEntries = regularSearch(entries, SEARCH_PROPS, debouncedSearch);
+    const ratedEntries = regularSearch(entries, SEARCH_PROPS, debouncedSearch);
+    const filteredEntries = filter(ratedEntries, !!debouncedSearch);
+    const sortedEntries = sort(filteredEntries);
 
     if (sortedEntries.length) {
       setSearching(false);
-      setEntries(sortedEntries);
+      setFilteredEntries(sortedEntries);
       return;
     }
 
@@ -52,18 +52,20 @@ const List: FC<ListProps> = ({ entries }) => {
           const matchingEntries = sorted.map((res) => ({
             ...entries.find((entry) => entry.command === res.metadata),
             score: res.score,
-          }));
+          })) as RatedEntry[];
+          const sortedEntries = sort(matchingEntries);
+          const filteredEntries = filter(sortedEntries, !!debouncedSearch);
           setSearching(false);
-          setEntries(matchingEntries as EntryListProps['entries']);
+          setFilteredEntries(filteredEntries);
         })
         .catch((err) => {
           console.log('Model: error');
           console.log(err);
           setSearching(false);
-          setEntries([] as EntryListProps['entries']);
+          setFilteredEntries([] as EntryListProps['entries']);
         });
     })();
-  }, [debouncedSearch, entries, setEntries]);
+  }, [debouncedSearch, entries, setFilteredEntries]);
 
   return (
     <EntryList

@@ -1,7 +1,5 @@
-import { HighLightedEntry } from './enrich';
+import { RatedEntry } from './rate';
 
-export default (entries: HighLightedEntry[], hasSearch: boolean) => {
-  return hasSearch
-    ? entries.filter((entry) => entry.highlights.length > 0)
-    : entries;
+export default (entries: RatedEntry[], hasSearch: boolean) => {
+  return hasSearch ? entries.filter((entry) => entry.score > 0) : entries;
 };
