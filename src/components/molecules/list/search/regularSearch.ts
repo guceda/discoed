@@ -1,7 +1,7 @@
 import { EntryProperties } from '../../entry/types';
 import { EntryListProps } from '../../entryList/EntryList';
-import enrich from './enrich';
-import rate, { RatedEntry } from './rate';
+import enrich from '../utils/enrich';
+import rate, { RatedEntry } from '../utils/rate';
 
 const regularSearch = (
   entries: EntryListProps['entries'],

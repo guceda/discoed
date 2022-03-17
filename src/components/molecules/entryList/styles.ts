@@ -10,7 +10,8 @@ export const containerStyles = (theme: Theme): CSSProperties => ({
 });
 
 export const contentStyles = (theme: Theme): CSSProperties => ({
-  padding: theme.spacing.sizes.medium,
+  paddingRight: theme.spacing.sizes.medium,
+  paddingLeft: theme.spacing.sizes.medium,
   overflow: 'scroll',
   backgroundColor: theme.palette.white,
   height: '100%',

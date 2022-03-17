@@ -7,7 +7,7 @@ import EntryList, { EntryListProps } from '../entryList/EntryList';
 import useDebounce from '../entryList/hooks/useDebounce';
 import { HighLightedEntry } from './utils/enrich';
 import filter from './utils/filter';
-import regularSearch from './utils/regularSearch';
+import regularSearch from './search/regularSearch';
 import sort from './utils/sort';
 import { RatedEntry } from './utils/rate';
 
@@ -53,10 +53,10 @@ const List: FC<ListProps> = ({ entries }) => {
             ...entries.find((entry) => entry.command === res.metadata),
             score: res.score,
           })) as RatedEntry[];
-          const sortedEntries = sort(matchingEntries);
-          const filteredEntries = filter(sortedEntries, !!debouncedSearch);
+          const filteredEntries = filter(matchingEntries, !!debouncedSearch);
+          const sortedEntries = sort(filteredEntries);
           setSearching(false);
-          setFilteredEntries(filteredEntries);
+          setFilteredEntries(sortedEntries);
         })
         .catch((err) => {
           console.log('Model: error');
