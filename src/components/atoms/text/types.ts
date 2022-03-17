@@ -1,4 +1,4 @@
-import { FC, HTMLProps, ReactChild, ReactElement } from 'react';
+import { FC, HTMLProps, ReactElement } from 'react';
 import { Color, Sizes } from '../../../theme/types';
 
 export enum TextualWeights {
@@ -19,7 +19,7 @@ export interface NestedFC<T> {
 
 export interface TextProps
   extends Omit<HTMLProps<HTMLParagraphElement>, 'size'> {
-  children: ReactChild;
+  children: any;
   weight?: TextualWeights;
   italic?: boolean;
   size?: Sizes;

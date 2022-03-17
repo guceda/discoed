@@ -1,12 +1,18 @@
-import { FC, useState, useCallback } from 'react';
+import { FC, useState, useCallback, useMemo } from 'react';
 import { useTheme } from '../../../providers/ThemeProvider';
 import Entry, { EntryProps } from '../entry/Entry';
-import { containerStyles, contentStyles, searchStyles } from './styles';
+import {
+  containerStyles,
+  contentStyles,
+  counterStyles,
+  searchStyles,
+} from './styles';
 import * as icons from '../../../assets/icons';
 import Flex from '../../atoms/flex/Flex';
 import Input from '../../atoms/input/Input';
 import NoData from '../noData/noData';
 import Blink from '../../atoms/blink/Blink';
+import Text from '../../atoms/text/Text';
 
 export interface EntryListProps {
   entries: Omit<EntryProps, 'onOpen' | 'open'>[];
@@ -28,6 +34,13 @@ const EntryList: FC<EntryListProps> = ({
     (idx) => setOpen((curr) => (curr === idx ? null : idx)),
     [],
   );
+
+  const counterText = useMemo(() => {
+    if (search !== '') {
+      return `${entries.length} ${entries.length === 1 ? 'match' : 'matches'}`;
+    }
+    return `${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}`;
+  }, [entries.length, search]);
 
   return (
     <Flex flexDirection="column" style={containerStyles(theme)}>
@@ -55,6 +68,9 @@ const EntryList: FC<EntryListProps> = ({
             <NoData />
           )}
         </Flex>
+      </Flex>
+      <Flex style={counterStyles(theme)}>
+        <Text.CopySmall>{counterText}</Text.CopySmall>
       </Flex>
     </Flex>
   );

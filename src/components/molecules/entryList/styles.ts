@@ -7,6 +7,7 @@ export const containerStyles = (theme: Theme): CSSProperties => ({
   borderRadius: theme.shape.borderRadius.xxsmall,
   overflow: 'scroll',
   backgroundColor: theme.palette.white,
+  position: 'relative',
 });
 
 export const contentStyles = (theme: Theme): CSSProperties => ({
@@ -20,4 +21,17 @@ export const contentStyles = (theme: Theme): CSSProperties => ({
 export const searchStyles = (theme: Theme): CSSProperties => ({
   padding: theme.spacing.sizes.medium,
   gap: theme.spacing.sizes.small,
+});
+
+export const counterStyles = (theme: Theme): CSSProperties => ({
+  position: 'absolute',
+  bottom: theme.spacing.sizes.xsmall,
+  right: theme.spacing.sizes.xsmall,
+  paddingTop: theme.spacing.sizes.xxsmall,
+  paddingBottom: theme.spacing.sizes.xxsmall,
+  paddingRight: theme.spacing.sizes.xsmall,
+  paddingLeft: theme.spacing.sizes.xsmall,
+  backgroundColor: theme.palette.white,
+  borderRadius: theme.shape.borderRadius.xxsmall,
+  filter: `drop-shadow(0px 1px 4px rgba(0,0,0, 0.2))`,
 });
