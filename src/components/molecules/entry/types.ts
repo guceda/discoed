@@ -1,4 +1,4 @@
-import { Highlight } from '../entryList/utils/enrich';
+import { Highlight } from '../list/utils/enrich';
 
 export enum CommandType {
   'inline' = 'inline',

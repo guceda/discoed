@@ -55,8 +55,7 @@ class SemanticSearchService extends BaseApiService {
       url: `search?query=${query}`,
       type: RequestType.get,
     });
-    const sorted = data.data.sort((a, b) => a.score - b.score);
-    return sorted;
+    return data.data;
   };
 }
 

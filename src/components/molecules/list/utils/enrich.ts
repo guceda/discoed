@@ -6,7 +6,7 @@ export interface Highlight {
   end: number;
 }
 
-export interface EnrichedEntry extends EntryType {
+export interface HighLightedEntry extends EntryType {
   highlights: Highlight[];
 }
 
@@ -32,9 +32,10 @@ export default (
   if (!queryClean)
     return entries.map((entry) => ({ ...entry, highlights: [] }));
   return entries.map((entry) => {
-    const enriched: EnrichedEntry = { ...entry, highlights: [] };
+    const enriched: HighLightedEntry = { ...entry, highlights: [] };
     targetFields.forEach((field) => {
       const hasField = field in enriched;
+
       const isMatch =
         hasField &&
         (enriched[field] as string).toLowerCase().includes(queryClean);

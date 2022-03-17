@@ -1,12 +1,13 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import SemanticSearchService from '../../../services/SemanticSearchService';
 import { FlexProps } from '../../atoms/flex/Flex';
 import { EntryProps } from '../entry/Entry';
 import { EntryProperties } from '../entry/types';
 import EntryList, { EntryListProps } from '../entryList/EntryList';
 import useDebounce from '../entryList/hooks/useDebounce';
-import { EnrichedEntry } from '../entryList/utils/enrich';
-import regularSearch from '../entryList/utils/regularSearch';
+import { HighLightedEntry } from './utils/enrich';
+import regularSearch from './utils/regularSearch';
+import sort from './utils/sort';
 
 export interface ListProps extends FlexProps {
   entries: Omit<EntryProps, 'onOpen' | 'open'>[];
@@ -18,14 +19,18 @@ const List: FC<ListProps> = ({ entries }) => {
   const [search, setSearch] = useState('');
   const [searching, setSearching] = useState(false);
   const [filteredEntries, setFilteredEntries] = useState<
-    EntryListProps['entries'] | EnrichedEntry[]
+    EntryListProps['entries'] | HighLightedEntry[]
   >(entries);
 
   const debouncedSearch = useDebounce(search, 500);
 
+  const setEntries = useCallback((entries) => {
+    return setFilteredEntries(sort(entries));
+  }, []);
+
   useEffect(() => {
     if (debouncedSearch === '') {
-      setFilteredEntries(entries);
+      setEntries(entries);
       return;
     }
     setSearching(true);
@@ -33,7 +38,7 @@ const List: FC<ListProps> = ({ entries }) => {
 
     if (sortedEntries.length) {
       setSearching(false);
-      setFilteredEntries(sortedEntries);
+      setEntries(sortedEntries);
       return;
     }
 
@@ -49,16 +54,16 @@ const List: FC<ListProps> = ({ entries }) => {
             score: res.score,
           }));
           setSearching(false);
-          setFilteredEntries(matchingEntries as EntryListProps['entries']);
+          setEntries(matchingEntries as EntryListProps['entries']);
         })
         .catch((err) => {
           console.log('Model: error');
           console.log(err);
           setSearching(false);
-          setFilteredEntries([] as EntryListProps['entries']);
+          setEntries([] as EntryListProps['entries']);
         });
     })();
-  }, [debouncedSearch, entries]);
+  }, [debouncedSearch, entries, setEntries]);
 
   return (
     <EntryList

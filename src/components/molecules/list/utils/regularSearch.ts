@@ -1,17 +1,19 @@
 import { EntryProperties } from '../../entry/types';
-import { EntryListProps } from '../EntryList';
-import enrich, { EnrichedEntry } from './enrich';
+import { EntryListProps } from '../../entryList/EntryList';
+import enrich from './enrich';
 import filter from './filter';
+import rate, { RatedEntry } from './rate';
 import sort from './sort';
 
 const regularSearch = (
   entries: EntryListProps['entries'],
   searchProps: EntryProperties[],
   search: string,
-): EnrichedEntry[] => {
+): RatedEntry[] => {
   const enrichedEntries = enrich(entries, searchProps, search);
   const filteredEntries = filter(enrichedEntries, !!search);
-  const sortedEntries = sort(filteredEntries);
+  const ratedEntries = rate(filteredEntries);
+  const sortedEntries = sort(ratedEntries);
   return sortedEntries;
 };
 

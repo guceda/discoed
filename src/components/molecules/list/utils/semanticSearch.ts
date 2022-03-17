@@ -1,5 +1,5 @@
 import SemanticSearchService from '../../../../services/SemanticSearchService';
-import { EntryListProps } from '../EntryList';
+import { EntryListProps } from '../../entryList/EntryList';
 
 const semanticSearch = (
   search: string,

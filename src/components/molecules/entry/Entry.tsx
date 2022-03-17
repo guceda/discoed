@@ -81,7 +81,7 @@ const Entry: FC<EntryProps> = ({
           >
             <Highlight search={search}>{description}</Highlight>
           </Text.CopySmall>
-          {score && <Text.CopySmall>{score}</Text.CopySmall>}
+          {score && <Text.CopySmall>{score.toFixed(3)}</Text.CopySmall>}
         </Flex>
       </Flex>
     </Flex>
