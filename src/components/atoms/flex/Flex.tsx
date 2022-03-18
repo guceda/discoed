@@ -1,4 +1,4 @@
-import { FC, HTMLProps } from 'react';
+import { forwardRef, HTMLProps } from 'react';
 
 type Global = 'inherit' | 'initial' | 'revert' | 'unset';
 type Alignment = 'center' | 'start' | 'end' | 'flex-start' | 'flex-end';
@@ -33,46 +33,52 @@ export interface FlexProps extends HTMLProps<HTMLDivElement> {
   children?: any;
 }
 
-const Flex: FC<FlexProps> = ({
-  flexDirection,
-  flexWrap,
-  justifyContent,
-  alignItems,
-  alignContent,
-  flexGrow,
-  flexShrink,
-  gap,
-  width,
-  maxWidth,
-  height,
-  maxHeight,
-  children,
-  style,
-  ...props
-}) => {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection,
-        flexWrap,
-        justifyContent,
-        alignItems,
-        alignContent,
-        flexGrow,
-        flexShrink,
-        width,
-        maxWidth,
-        height,
-        maxHeight,
-        gap: `${gap}px`,
-        ...style,
-      }}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-};
+const Flex = forwardRef<HTMLDivElement, FlexProps>(
+  (
+    {
+      flexDirection,
+      flexWrap,
+      justifyContent,
+      alignItems,
+      alignContent,
+      flexGrow,
+      flexShrink,
+      gap,
+      width,
+      maxWidth,
+      height,
+      maxHeight,
+      children,
+      style,
+      ...props
+    },
+    ref,
+  ) => {
+    return (
+      <div
+        ref={ref}
+        style={{
+          display: 'flex',
+          flexDirection,
+          flexWrap,
+          justifyContent,
+          alignItems,
+          alignContent,
+          flexGrow,
+          flexShrink,
+          width,
+          maxWidth,
+          height,
+          maxHeight,
+          gap: `${gap}px`,
+          ...style,
+        }}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  },
+);
 
 export default Flex;

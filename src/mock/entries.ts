@@ -1,6 +1,6 @@
 import { EntryType } from '../components/molecules/entry/types';
 
-export default [
+const entries = [
   {
     command: 'atan',
     params: ['number1', 'number2'],
@@ -74,3 +74,42 @@ export default [
       'Create column - Creates a new column that returns the Osa distance between two strings.',
   },
 ] as EntryType[];
+
+export default [
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+  ...entries,
+];

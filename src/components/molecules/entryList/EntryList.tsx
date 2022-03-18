@@ -1,4 +1,11 @@
-import { FC, useState, useCallback, useMemo } from 'react';
+import {
+  FC,
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+  useLayoutEffect,
+} from 'react';
 import { useTheme } from '../../../providers/ThemeProvider';
 import Entry, { EntryProps } from '../entry/Entry';
 import {
@@ -28,12 +35,19 @@ const EntryList: FC<EntryListProps> = ({
   setSearch,
 }) => {
   const theme = useTheme();
+  const listRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<number>();
 
   const handleOpen = useCallback(
     (idx) => setOpen((curr) => (curr === idx ? null : idx)),
     [],
   );
+
+  useLayoutEffect(() => {
+    if (listRef?.current) {
+      listRef.current.scrollTop = 0;
+    }
+  }, [search, listRef]);
 
   const counterText = useMemo(() => {
     if (search !== '') {
@@ -52,13 +66,14 @@ const EntryList: FC<EntryListProps> = ({
         />
         {searching && <Blink />}
       </Flex>
-      <Flex flexDirection="column" style={contentStyles(theme)}>
+      <Flex flexDirection="column" style={contentStyles(theme)} ref={listRef}>
         <Flex flexDirection="column" height="100%">
           {entries.length ? (
             entries.map((entry, idx) => (
               <Entry
                 search={search}
-                key={entry.command}
+                // eslint-disable-next-line react/no-array-index-key
+                key={`entry.command-${idx}`}
                 open={open === idx}
                 onOpen={() => handleOpen(idx)}
                 {...entry}
