@@ -24,7 +24,7 @@ const List: FC<ListProps> = ({ entries }) => {
     EntryListProps['entries'] | HighLightedEntry[]
   >(entries);
 
-  const debouncedSearch = useDebounce(search, 500);
+  const debouncedSearch = useDebounce(search, 200);
 
   useEffect(() => {
     if (debouncedSearch === '') {

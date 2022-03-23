@@ -8,6 +8,12 @@ import SemanticSearchService from './services/SemanticSearchService';
 import List from './components/molecules/list/List';
 import './App.css';
 
+const baseQuery = `from my.test.holty
+select eventdate, cpuSys
+select float(cpuSys) as cpuSys_number
+groupby 5s 
+select count(cpuSys_number) as count`;
+
 const App: FC = () => {
   useEffect(() => {
     console.log('Model: training');
@@ -25,7 +31,7 @@ const App: FC = () => {
           <Layout>
             <List entries={entries} />
             <Divider />
-            <CodeEditor content="const test = null;" />
+            <CodeEditor content={baseQuery} />
           </Layout>
         </header>
       </div>
