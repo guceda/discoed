@@ -8,11 +8,11 @@ import SemanticSearchService from './services/SemanticSearchService';
 import List from './components/molecules/list/List';
 import './App.css';
 
-const baseQuery = `from my.test.holty
-select eventdate, cpuSys
-select float(cpuSys) as cpuSys_number
-groupby 5s 
-select count(cpuSys_number) as count`;
+const baseQuery = `SELECT brand as car_brand, models, doors, year,
+SELECT CAST(year AS int) as year_int,
+SELECT COUNT(models) as total_by_brand
+FROM luxury_cars
+`;
 
 const App: FC = () => {
   useEffect(() => {
