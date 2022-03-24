@@ -11,7 +11,7 @@ class Visitor {
   // eslint-disable-next-line consistent-return
   private visit(node: INode): any {
     if (node.type) return (this as any)[`${node.type}Visit`](node);
-    if (node.ast) return this.visit(node.ast);
+    if (node.ast) return (this as any).tableColumnAstVisit(node);
   }
 
   private visitAll(nodes: INode[]) {

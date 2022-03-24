@@ -26,7 +26,7 @@ const CodeEditor: FC<CodeEditorProps> = ({ content }) => {
     el.style.color = 'salmon';
     el.className = `preview`;
     el.id = `preview-${line}`;
-    el.innerText = prev.join(', ');
+    el.innerText = prev;
 
     document.querySelector(`#preview-${line}`)?.remove();
     const container = currLine?.querySelector('.preview-container');

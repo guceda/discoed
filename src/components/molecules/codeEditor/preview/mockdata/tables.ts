@@ -1,21 +1,23 @@
-export interface Header {
+export interface TableHeader {
   label: string;
-  type: 'string' | 'number';
+  type: 'str' | 'int' | 'float';
 }
 
+export type Metadata = TableHeader[];
+
 export interface Table {
-  metadata: Header[];
-  data: Header['type'][][];
+  metadata: Metadata;
+  data: TableHeader['type'][][];
 }
 
 const mockTables = {
   luxury_cars: {
     metadata: [
-      { label: 'brand', type: 'string' },
-      { label: 'model', type: 'string' },
-      { label: 'doors', type: 'number' },
-      { label: 'color', type: 'string' },
-      { label: 'year', type: 'string' },
+      { label: 'brand', type: 'str' },
+      { label: 'model', type: 'str' },
+      { label: 'doors', type: 'int' },
+      { label: 'color', type: 'str' },
+      { label: 'year', type: 'str' },
     ],
     data: [],
   } as Table,

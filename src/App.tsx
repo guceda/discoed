@@ -8,9 +8,9 @@ import SemanticSearchService from './services/SemanticSearchService';
 import List from './components/molecules/list/List';
 import './App.css';
 
-const baseQuery = `SELECT brand as car_brand, models, doors, year,
-SELECT CAST(year AS int) as year_int,
-SELECT COUNT(models) as total_by_brand
+// SELECT COUNT(models) as total_by_brand
+const baseQuery = `SELECT brand as car_brand, model, doors, year,
+SELECT CAST(year AS int) as year_int
 FROM luxury_cars
 `;
 
