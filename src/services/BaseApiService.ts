@@ -22,8 +22,8 @@ class BaseApiService {
   }
 
   static getUrl(uri = ''): string {
-    return `${process.env.REACT_APP_WORD_EMBEDDINGS_BASE_API}${uri}`;
-    // return `${process.env.REACT_APP_SEMANTIC_SEARCH_BASE_API}${uri}`;
+    return `${process.env.REACT_APP_WORD_EMBEDDINGS_BASE_API}${uri}`; // EMBEDDINGS
+    // return `${process.env.REACT_APP_SEMANTIC_SEARCH_BASE_API}${uri}`; // GPT3
   }
 
   static request<R = undefined>(

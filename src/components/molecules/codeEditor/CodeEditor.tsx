@@ -1,9 +1,13 @@
-import { FC } from 'react';
-import Editor, { OnMount } from '@monaco-editor/react';
+import { FC, useCallback, useState } from 'react';
+import Editor, { Monaco, OnMount } from '@monaco-editor/react';
+import { editor, Selection } from 'monaco-editor';
 import Flex, { FlexProps } from '../../atoms/flex/Flex';
 import { useTheme } from '../../../providers/ThemeProvider';
 import { containerStyles } from './styles';
-import getPreview from './preview/getPreview';
+import contentWidget, {
+  WidgetNode,
+  WIDGET_ID,
+} from './preview/codeAnnotation/ContentWidget';
 
 export interface CodeEditorProps extends FlexProps {
   content?: string;
@@ -11,73 +15,92 @@ export interface CodeEditorProps extends FlexProps {
 
 const CodeEditor: FC<CodeEditorProps> = ({ content }) => {
   const theme = useTheme();
+  const [line, setLine] = useState(-1);
 
-  const preview = (
-    line: number,
-    contentToCurrentLine: string[],
-    currLine: Element | undefined,
-  ) => {
-    const button = document.querySelector(`#play-button-${line}`);
-    if (button) button.innerHTML = 'hide preview';
-    const prev = getPreview(contentToCurrentLine.join(' ').trim());
+  const getOwnWidgets = useCallback((editor: editor.IStandaloneCodeEditor) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const widgets = (editor as any)._contentWidgets;
+    return Object.keys(widgets).reduce((acc, widgetName) => {
+      if (widgetName.includes(WIDGET_ID)) {
+        return { ...acc, [widgetName]: widgets[widgetName] };
+      }
+      return acc;
+    }, {});
+  }, []);
 
-    const el = document.createElement('span');
-    el.style.margin = '0 0 0 20px';
-    el.style.color = 'salmon';
-    el.className = `preview`;
-    el.id = `preview-${line}`;
-    el.innerText = prev;
+  const getWidgetInLine = useCallback(
+    (
+      editor: editor.IStandaloneCodeEditor,
+      line: number,
+    ): WidgetNode | undefined => {
+      const ownWidgets = getOwnWidgets(editor);
+      const widgetName = Object.keys(ownWidgets).find(
+        (x: string) =>
+          (ownWidgets as any)[x].position.position.lineNumber === line,
+      );
+      return widgetName ? (ownWidgets as any)[widgetName] : null;
+    },
+    [getOwnWidgets],
+  );
 
-    document.querySelector(`#preview-${line}`)?.remove();
-    const container = currLine?.querySelector('.preview-container');
-    container?.appendChild(el);
-  };
+  const removeInactiveWidgets = useCallback(
+    (editor: editor.IStandaloneCodeEditor, line: number) => {
+      const widgets = getOwnWidgets(editor);
+      Object.values(widgets).forEach((entry: any) => {
+        const { widget } = entry;
+        const position = widget.getPosition()?.position?.lineNumber;
+        if (position !== line && !widget.executed) {
+          editor.removeContentWidget(widget);
+        }
+      });
+    },
+    [getOwnWidgets],
+  );
 
-  const hidePreview = (line: number) => {
-    document.querySelector(`#preview-${line}`)?.remove();
+  const handleContentChange = useCallback(
+    (
+      editor: editor.IStandaloneCodeEditor,
+      ev: editor.IModelContentChangedEvent,
+    ) => {
+      const { startLineNumber, endLineNumber } = ev.changes[0].range;
 
-    const button = document.querySelector(`#play-button-${line}`);
-    if (button) button.innerHTML = 'play up to here';
-  };
+      const widgets = getOwnWidgets(editor);
+      Object.values(widgets).forEach((entry: any) => {
+        const { widget } = entry;
+        const position = widget.getPosition()?.position?.lineNumber;
+        if (
+          position > endLineNumber ||
+          (position >= startLineNumber && position <= endLineNumber)
+        ) {
+          editor.removeContentWidget(widget);
+        }
+      });
+    },
+    [getOwnWidgets],
+  );
 
-  const activateLine = (editorModel: any, line: number) => {
-    const lines = document.querySelector('.view-lines');
-    const currLine = lines?.children[line - 1];
-    const contentToCurrentLine = editorModel.getLinesContent().slice(0, line);
+  const handleMouseUp = useCallback(
+    (monaco: Monaco, editor: editor.IStandaloneCodeEditor) => {
+      const w = contentWidget(monaco, editor, Math.random().toString());
+      const selection = editor.getSelection();
+      const { lineNumber } = (selection as Selection).getEndPosition();
+      const existingWidgetInLine = getWidgetInLine(editor, lineNumber);
+      if (line !== lineNumber) setLine(lineNumber);
+      if (!existingWidgetInLine) {
+        removeInactiveWidgets(editor, lineNumber);
+        editor.addContentWidget(w);
+      }
+    },
+    [getWidgetInLine, line, removeInactiveWidgets],
+  );
 
-    let container = document.querySelector(`#preview-container-${line}`);
-    const hasPreview = !!container?.querySelector(`#preview-${line}`);
-
-    const el = document.createElement('button');
-    el.onclick = (ev) => {
-      ev.stopPropagation();
-      return hasPreview
-        ? hidePreview(line)
-        : preview(line, contentToCurrentLine, currLine);
-    };
-    el.style.margin = '0 0 0 20px';
-    el.style.color = 'gray';
-    el.className = 'play-button';
-    el.id = `play-button-${line}`;
-    el.innerText = hasPreview ? 'hide preview' : 'play up to here';
-
-    if (!container) {
-      container = document.createElement('div');
-      container.className = `preview-container`;
-      container.id = `preview-container-${line}`;
-    }
-
-    document.querySelectorAll(`.${el.className}`)?.forEach((e) => e.remove());
-    container.prepend(el);
-    (currLine as any).style.display = 'flex';
-    currLine?.appendChild(container);
-  };
-
-  const handleEditorDidMount: OnMount = (editor) => {
-    editor.onDidChangeCursorPosition((cursor) =>
-      activateLine(editor.getModel(), cursor.position.lineNumber),
-    );
-  };
+  const handleEditorDidMount: OnMount = useCallback(
+    (editor, monaco) => {
+      editor.onDidChangeModelContent((ev) => handleContentChange(editor, ev));
+      editor.onMouseUp(() => handleMouseUp(monaco, editor));
+    },
+    [handleContentChange, handleMouseUp],
+  );
 
   return (
     <Flex style={containerStyles(theme)} width="1000px">

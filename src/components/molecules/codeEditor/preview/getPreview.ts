@@ -72,7 +72,6 @@ const complete = (columns: Preview): Preview => {
 const withTypes = (columns: Preview): Preview => {
   return columns.map((col) => {
     const metadata = () => getAllMetaFromTable(col.table);
-    console.log(col);
     return {
       ...col,
       type: col.type
@@ -101,12 +100,16 @@ const getAST = (selection: string) => {
 
 const getPreview = (selection: string) => {
   const { ast } = getAST(selection);
-  const result = PreviewVisitor.of().visitNode(ast) as unknown as Result;
-  const prepared = prepare(result);
-  const completed = complete(prepared);
-  const typed = withTypes(completed);
-  const string = stringify(typed);
-  return string;
+  try {
+    const result = PreviewVisitor.of().visitNode(ast) as unknown as Result;
+    const prepared = prepare(result);
+    const completed = complete(prepared);
+    const typed = withTypes(completed);
+    const string = stringify(typed);
+    return string;
+  } catch (err) {
+    return 'Upps, cannot preview';
+  }
 };
 
 export default getPreview;
