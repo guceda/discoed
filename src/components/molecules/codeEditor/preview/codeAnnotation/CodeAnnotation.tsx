@@ -1,7 +1,8 @@
 import { FC, useState, MouseEvent } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import getPreview from 'static-query-analyzer';
 import { useTheme } from '../../../../../providers/ThemeProvider';
 import Flex from '../../../../atoms/flex/Flex';
-import getPreview from '../getPreview';
 import { containerStyles, buttonStyles } from './styles';
 
 export interface CodeAnnotationsProps {
@@ -39,7 +40,7 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
           onClick={(ev) => togglePreview(ev, true)}
           style={buttonStyles(theme)}
         >
-          preview up to here
+          preview
         </Flex>
       )}
       {!loading && previewing && (

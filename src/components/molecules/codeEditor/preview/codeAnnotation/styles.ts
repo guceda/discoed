@@ -4,7 +4,7 @@ import { Theme } from '../../../../../theme/types';
 export const containerStyles = (theme: Theme): CSSProperties => ({
   paddingLeft: theme.spacing.sizes.small,
   color: theme.palette.primary.main,
-  fontSize: theme.fonts.sizes.xsmall,
+  fontSize: theme.fonts.sizes.xxsmall,
   whiteSpace: 'nowrap',
 });
 
