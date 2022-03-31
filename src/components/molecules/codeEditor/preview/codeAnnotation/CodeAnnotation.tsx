@@ -1,25 +1,31 @@
-import { FC, useState, MouseEvent } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { FC, useState, MouseEvent, useEffect } from 'react';
 import getPreview from 'static-query-analyzer';
 import { useTheme } from '../../../../../providers/ThemeProvider';
 import Flex from '../../../../atoms/flex/Flex';
-import { containerStyles, buttonStyles } from './styles';
+import { containerStyles, buttonStyles, previewStyles } from './styles';
 
 export interface CodeAnnotationsProps {
   content: string;
   setExec: (value: boolean) => void;
   onClose: () => void;
+  onPrevSelection: (show: boolean) => void;
 }
 
 const CodeAnnotation: FC<CodeAnnotationsProps> = ({
   content,
   setExec,
   onClose,
+  onPrevSelection,
 }) => {
   const theme = useTheme();
   const [previewing, setPreviewing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState('');
+  const [showSelection, setShowSelection] = useState(false);
+
+  useEffect(() => {
+    onPrevSelection(showSelection);
+  }, [onPrevSelection, showSelection]);
 
   const togglePreview = (ev: MouseEvent<HTMLDivElement>, preview: boolean) => {
     setExec(preview);
@@ -54,7 +60,13 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
           >
             close
           </Flex>
-          <Flex>{preview}</Flex>
+          <Flex
+            onMouseDown={() => setShowSelection(true)}
+            onMouseUp={() => setShowSelection(false)}
+            style={previewStyles}
+          >
+            {preview}
+          </Flex>
         </>
       )}
     </Flex>

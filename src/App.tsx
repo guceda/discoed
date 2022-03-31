@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import ThemeProvider from './providers/ThemeProvider';
 import CodeEditor from './components/molecules/codeEditor/CodeEditor';
-import entries from './mock/entries';
+import entries from './__mockdata__/entries';
 import Layout from './components/atoms/layout/Layout';
 import Divider from './components/atoms/divider/Divider';
 import SemanticSearchService from './services/SemanticSearchService';

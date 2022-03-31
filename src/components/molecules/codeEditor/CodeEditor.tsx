@@ -81,12 +81,12 @@ const CodeEditor: FC<CodeEditorProps> = ({ content }) => {
 
   const handleMouseUp = useCallback(
     (monaco: Monaco, editor: editor.IStandaloneCodeEditor) => {
-      const w = contentWidget(monaco, editor, Math.random().toString());
       const selection = editor.getSelection();
       const { lineNumber } = (selection as Selection).getEndPosition();
       const existingWidgetInLine = getWidgetInLine(editor, lineNumber);
       if (line !== lineNumber) setLine(lineNumber);
       if (!existingWidgetInLine) {
+        const w = contentWidget(monaco, editor, Math.random().toString());
         removeInactiveWidgets(editor, lineNumber);
         editor.addContentWidget(w);
       }

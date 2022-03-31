@@ -2,6 +2,7 @@ import { Monaco } from '@monaco-editor/react';
 import { editor, Position, Selection } from 'monaco-editor';
 import ReactDOM from 'react-dom';
 import CodeAnnotation from './CodeAnnotation';
+import './selection.styles.css';
 
 export const WIDGET_ID = 'annotation';
 
@@ -15,13 +16,18 @@ export interface WidgetPosition {
 
 export interface WidgetNode extends editor.IContentWidget {
   domNode: HTMLElement;
-  position: WidgetPosition | undefined;
+  position?: WidgetPosition;
   executed: boolean;
   id: string;
+  selectedQuery?: string;
+  selection: Selection | null;
   getSelectionEnd: () => Position;
   setExecution: (value: boolean) => void;
   getSelectedQuery: () => string;
   removeSelf: () => void;
+  highlightSelection: () => void;
+  hideSelection: () => void;
+  decorations: string[];
 }
 
 const contentWidget = (
@@ -34,6 +40,9 @@ const contentWidget = (
   domNode: null as unknown as HTMLDivElement,
   executed: false,
   position: undefined,
+  selectedQuery: undefined,
+  selection: null,
+  decorations: [],
 
   getId() {
     return this.id;
@@ -53,21 +62,55 @@ const contentWidget = (
   },
 
   getSelectedQuery() {
-    const model = editor?.getModel();
-    const selection = editor.getSelection();
-    const isEmptySelection = selection?.isEmpty();
+    if (!this.selectedQuery || !this.selection) {
+      const model = editor?.getModel();
+      const selection = editor.getSelection();
+      const isEmptySelection = selection?.isEmpty();
 
-    if (isEmptySelection) {
-      const editorContent = model ? model.getLinesContent() : [];
-      const { lineNumber } = this.getSelectionEnd();
-      const arrayContent = editorContent.slice(0, lineNumber);
-      return arrayContent.join(' ').trim();
+      if (isEmptySelection) {
+        const editorContent = model ? model.getLinesContent() : [];
+        const { lineNumber, column } = this.getSelectionEnd();
+        const arrayContent = editorContent.slice(0, lineNumber);
+        this.selectedQuery = arrayContent.join(' ').trim();
+        this.selection = {
+          startLineNumber: 1,
+          startColumn: 1,
+          endLineNumber: lineNumber,
+          endColumn: column,
+        } as Selection;
+      } else if (editor && model && selection) {
+        const selectionContent = model.getValueInRange(selection);
+        this.selectedQuery = selectionContent;
+        this.selection = selection;
+      } else {
+        this.selectedQuery = '';
+        this.selection = selection;
+      }
     }
-    if (editor && model && selection) {
-      const selectionContent = model.getValueInRange(selection);
-      return selectionContent;
-    }
-    return '';
+    return this.selectedQuery;
+  },
+
+  highlightSelection() {
+    const { startLineNumber, startColumn, endLineNumber, endColumn } = this
+      .selection as Selection;
+    this.decorations = editor.deltaDecorations(
+      [],
+      [
+        {
+          range: new monaco.Range(
+            startLineNumber,
+            startColumn,
+            endLineNumber,
+            endColumn,
+          ),
+          options: { inlineClassName: 'myLineDecoration' },
+        },
+      ],
+    );
+  },
+
+  hideSelection() {
+    this.decorations = editor.deltaDecorations(this.decorations, []);
   },
 
   getDomNode() {
@@ -75,7 +118,14 @@ const contentWidget = (
     const exec = this.setExecution.bind(this);
     const removeSelf = this.removeSelf.bind(this);
     const cmp = (
-      <CodeAnnotation onClose={removeSelf} setExec={exec} content={data} />
+      <CodeAnnotation
+        onPrevSelection={(show) =>
+          show ? this.highlightSelection() : this.hideSelection()
+        }
+        onClose={removeSelf}
+        setExec={exec}
+        content={data}
+      />
     );
     const container = document.createElement('div');
     ReactDOM.render(cmp, container);

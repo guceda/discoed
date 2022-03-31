@@ -14,3 +14,7 @@ export const buttonStyles = (theme: Theme): CSSProperties => ({
   textDecoration: 'underline',
   color: theme.palette.alpha[500],
 });
+
+export const previewStyles = {
+  cursor: 'context-menu',
+} as CSSProperties;
