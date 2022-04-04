@@ -2,7 +2,6 @@ import { FC, useState, MouseEvent, useEffect } from 'react';
 import getPreview from 'static-query-analyzer';
 import { useTheme } from '../../../../../providers/ThemeProvider';
 import Flex from '../../../../atoms/flex/Flex';
-import useDebounce from '../../../entryList/hooks/useDebounce';
 import { containerStyles, buttonStyles, previewStyles } from './styles';
 
 export interface CodeAnnotationsProps {
@@ -39,11 +38,8 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
     setPreviewing((prev) => preview || !prev);
   };
 
-  const debouncedsetShowSelection = useDebounce(
-    (show: boolean) => setShowSelection(show),
-    200,
-  );
-
+  const debouncedsetShowSelection = (show: boolean) =>
+    setTimeout(() => setShowSelection(show), 200);
   return (
     <Flex style={containerStyles(theme)}>
       {loading && <Flex>previewing...</Flex>}
