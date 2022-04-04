@@ -40,6 +40,7 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
 
   const debouncedsetShowSelection = (show: boolean) =>
     setTimeout(() => setShowSelection(show), 200);
+
   return (
     <Flex style={containerStyles(theme)}>
       {loading && <Flex>previewing...</Flex>}
