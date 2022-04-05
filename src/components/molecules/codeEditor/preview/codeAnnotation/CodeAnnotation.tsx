@@ -66,6 +66,7 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
           <Flex
             onMouseDown={() => setShowSelection(true)}
             onMouseUp={() => debouncedsetShowSelection(false)}
+            onMouseLeave={() => debouncedsetShowSelection(false)}
             style={previewStyles}
           >
             {preview}
