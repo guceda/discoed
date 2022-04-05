@@ -21,6 +21,7 @@
 		"react-scripts": "5.0.0",
 		"static-query-analyzer": "github:guceda/static-query-analyzer",
 		"typescript": "^4.6.2",
+		"uuid": "^8.3.2",
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
@@ -71,6 +72,7 @@
 		"@storybook/preset-create-react-app": "^4.0.1",
 		"@storybook/testing-library": "^0.0.9",
 		"@types/react-highlight-words": "^0.16.4",
+		"@types/uuid": "^8.3.4",
 		"@typescript-eslint/eslint-plugin": "^5.13.0",
 		"@typescript-eslint/parser": "^5.13.0",
 		"eslint": "^8.10.0",

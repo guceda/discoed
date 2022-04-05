@@ -14,6 +14,13 @@ export interface WidgetPosition {
   preference: editor.ContentWidgetPositionPreference[];
 }
 
+export interface CustomSelection {
+  startLineNumber: number;
+  startColumn: number;
+  endLineNumber: number;
+  endColumn: number;
+}
+
 export interface WidgetNode extends editor.IContentWidget {
   domNode: HTMLElement;
   position?: WidgetPosition;
@@ -21,6 +28,7 @@ export interface WidgetNode extends editor.IContentWidget {
   id: string;
   selectedQuery?: string;
   selection: Selection | null;
+  customSelection: CustomSelection | null;
   getSelectionEnd: () => Position;
   setExecution: (value: boolean) => void;
   getSelectedQuery: () => string;
@@ -41,8 +49,9 @@ const contentWidget = (
   executed: false,
   position: undefined,
   selectedQuery: undefined,
-  selection: null,
+  customSelection: null,
   decorations: [],
+  selection: null,
 
   getId() {
     return this.id;
@@ -62,9 +71,10 @@ const contentWidget = (
   },
 
   getSelectedQuery() {
-    if (!this.selectedQuery || !this.selection) {
+    if (!this.selectedQuery || !this.customSelection) {
       const model = editor?.getModel();
       const selection = editor.getSelection();
+      this.selection = selection;
       const isEmptySelection = selection?.isEmpty();
 
       if (isEmptySelection) {
@@ -72,7 +82,7 @@ const contentWidget = (
         const { lineNumber, column } = this.getSelectionEnd();
         const arrayContent = editorContent.slice(0, lineNumber);
         this.selectedQuery = arrayContent.join(' ').trim();
-        this.selection = {
+        this.customSelection = {
           startLineNumber: 1,
           startColumn: 1,
           endLineNumber: lineNumber,
@@ -81,32 +91,34 @@ const contentWidget = (
       } else if (editor && model && selection) {
         const selectionContent = model.getValueInRange(selection);
         this.selectedQuery = selectionContent;
-        this.selection = selection;
+        this.customSelection = selection;
       } else {
         this.selectedQuery = '';
-        this.selection = selection;
+        this.customSelection = selection;
       }
     }
     return this.selectedQuery;
   },
 
   highlightSelection() {
-    const { startLineNumber, startColumn, endLineNumber, endColumn } = this
-      .selection as Selection;
-    this.decorations = editor.deltaDecorations(
-      [],
-      [
-        {
-          range: new monaco.Range(
-            startLineNumber,
-            startColumn,
-            endLineNumber,
-            endColumn,
-          ),
-          options: { inlineClassName: 'myLineDecoration' },
-        },
-      ],
-    );
+    if (this.customSelection) {
+      const { startLineNumber, startColumn, endLineNumber, endColumn } =
+        this.customSelection;
+      this.decorations = editor.deltaDecorations(
+        [],
+        [
+          {
+            range: new monaco.Range(
+              startLineNumber,
+              startColumn,
+              endLineNumber,
+              endColumn,
+            ),
+            options: { inlineClassName: 'myLineDecoration' },
+          },
+        ],
+      );
+    }
   },
 
   hideSelection() {
@@ -135,8 +147,8 @@ const contentWidget = (
     this.domNode = container;
     return this.domNode;
   },
+
   getPosition() {
-    this.getDomNode();
     if (!this.position) {
       const { lineNumber } = this.getSelectionEnd();
       this.position = {

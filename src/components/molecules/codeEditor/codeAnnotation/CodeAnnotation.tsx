@@ -1,8 +1,8 @@
 import { FC, useState, MouseEvent, useEffect, useCallback } from 'react';
 import getPreview from 'static-query-analyzer';
-import { useTheme } from '../../../../../providers/ThemeProvider';
-import Flex from '../../../../atoms/flex/Flex';
-import Icon from '../../../../atoms/icon/Icon';
+import { useTheme } from '../../../../providers/ThemeProvider';
+import Flex from '../../../atoms/flex/Flex';
+import Icon from '../../../atoms/icon/Icon';
 import { containerStyles, buttonStyles, previewStyles } from './styles';
 
 export interface CodeAnnotationsProps {

@@ -1,13 +1,15 @@
 import { FC, useCallback, useState } from 'react';
 import Editor, { Monaco, OnMount } from '@monaco-editor/react';
 import { editor, Selection } from 'monaco-editor';
+import { v4 as uuidv4 } from 'uuid';
 import Flex, { FlexProps } from '../../atoms/flex/Flex';
 import { useTheme } from '../../../providers/ThemeProvider';
 import { containerStyles } from './styles';
+
 import contentWidget, {
   WidgetNode,
   WIDGET_ID,
-} from './preview/codeAnnotation/ContentWidget';
+} from './codeAnnotation/ContentWidget';
 
 export interface CodeEditorProps extends FlexProps {
   content?: string;
@@ -38,7 +40,7 @@ const CodeEditor: FC<CodeEditorProps> = ({ content }) => {
         (x: string) =>
           (ownWidgets as any)[x].position.position.lineNumber === line,
       );
-      return widgetName ? (ownWidgets as any)[widgetName] : null;
+      return widgetName ? (ownWidgets as any)[widgetName].widget : null;
     },
     [getOwnWidgets],
   );
@@ -79,28 +81,43 @@ const CodeEditor: FC<CodeEditorProps> = ({ content }) => {
     [getOwnWidgets],
   );
 
-  const handleMouseUp = useCallback(
-    (monaco: Monaco, editor: editor.IStandaloneCodeEditor) => {
-      const selection = editor.getSelection();
-      const { lineNumber } = (selection as Selection).getEndPosition();
-      const existingWidgetInLine = getWidgetInLine(editor, lineNumber);
-      if (line !== lineNumber) setLine(lineNumber);
-      if (!existingWidgetInLine) {
-        const w = contentWidget(monaco, editor, Math.random().toString());
-        removeInactiveWidgets(editor, lineNumber);
+  const handleSelectionChange = (
+    monaco: Monaco,
+    editor: editor.IStandaloneCodeEditor,
+    widgetInLine?: WidgetNode,
+  ) => {
+    const prevSelection = widgetInLine?.selection;
+    const newSelection = editor.getSelection();
+    if (prevSelection && newSelection) {
+      const isSameSelection = prevSelection?.equalsSelection(newSelection);
+      if (!isSameSelection && !widgetInLine.executed) {
+        const w = contentWidget(monaco, editor, uuidv4());
+        editor.removeContentWidget(widgetInLine);
         editor.addContentWidget(w);
       }
-    },
-    [getWidgetInLine, line, removeInactiveWidgets],
-  );
+    }
+  };
 
-  const handleEditorDidMount: OnMount = useCallback(
-    (editor, monaco) => {
-      editor.onDidChangeModelContent((ev) => handleContentChange(editor, ev));
-      editor.onMouseUp(() => handleMouseUp(monaco, editor));
-    },
-    [handleContentChange, handleMouseUp],
-  );
+  const handleMouseUp = (
+    monaco: Monaco,
+    editor: editor.IStandaloneCodeEditor,
+  ) => {
+    const selection = editor.getSelection();
+    const { lineNumber } = (selection as Selection).getEndPosition();
+    const existingWidgetInLine = getWidgetInLine(editor, lineNumber);
+    if (line !== lineNumber) setLine(lineNumber);
+    if (!existingWidgetInLine) {
+      const w = contentWidget(monaco, editor, uuidv4());
+      removeInactiveWidgets(editor, lineNumber);
+      editor.addContentWidget(w);
+    }
+    handleSelectionChange(monaco, editor, existingWidgetInLine);
+  };
+
+  const handleEditorDidMount: OnMount = (editor, monaco) => {
+    editor.onDidChangeModelContent((ev) => handleContentChange(editor, ev));
+    editor.onMouseUp(() => handleMouseUp(monaco, editor));
+  };
 
   return (
     <Flex style={containerStyles(theme)} width="1000px">
