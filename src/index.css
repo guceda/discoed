@@ -1,15 +1,3 @@
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 /* RESET */
 /* box sizing border-box for all elements */
 *,
@@ -25,4 +13,16 @@ cite { font-style:normal; }
 fieldset { border-width:0; padding:0; margin:0; }
 input {
   all: unset;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
