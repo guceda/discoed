@@ -4,7 +4,7 @@ import { FlexProps } from '../../atoms/flex/Flex';
 import { EntryProps } from '../entry/Entry';
 import { EntryProperties } from '../entry/types';
 import EntryList, { EntryListProps } from '../entryList/EntryList';
-import useDebounce from '../entryList/hooks/useDebounce';
+import useDebounce from '../../../hooks/useDebounce';
 import { HighLightedEntry } from './utils/enrich';
 import filter from './utils/filter';
 import regularSearch from './search/regularSearch';
