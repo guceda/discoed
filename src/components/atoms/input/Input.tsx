@@ -1,4 +1,5 @@
 import { FC, FormEvent, useCallback } from 'react';
+import { Icons } from '../../../assets/icons';
 import { useTheme } from '../../../providers/ThemeProvider';
 import Flex, { FlexProps } from '../flex/Flex';
 import Icon from '../icon/Icon';
@@ -6,7 +7,7 @@ import { containerStyles, iconStyles, inputStyles } from './styles';
 
 export interface InputProps extends Omit<FlexProps, 'onChange'> {
   onChange: (Input: string) => void;
-  icon?: JSX.Element;
+  icon?: Icons;
   placeholder?: string;
 }
 

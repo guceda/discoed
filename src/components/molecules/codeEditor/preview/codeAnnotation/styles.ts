@@ -8,13 +8,20 @@ export const containerStyles = (theme: Theme): CSSProperties => ({
   whiteSpace: 'nowrap',
 });
 
-export const buttonStyles = (theme: Theme): CSSProperties => ({
+export const buttonStyles = (
+  theme: Theme,
+  // hovered?: boolean,
+): any => ({
   cursor: 'pointer',
   paddingRight: theme.spacing.sizes.small,
   textDecoration: 'underline',
   color: theme.palette.alpha[500],
 });
 
-export const previewStyles = {
+export const previewStyles = (
+  theme: Theme,
+  hovered: boolean,
+): CSSProperties => ({
   cursor: 'context-menu',
-} as CSSProperties;
+  color: hovered ? theme.palette.primary.main : theme.palette.primary.highlight,
+});

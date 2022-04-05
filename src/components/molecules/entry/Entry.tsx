@@ -1,5 +1,4 @@
 import { FC, useCallback, useState } from 'react';
-import icons from '../../../assets/icons';
 import { useTheme } from '../../../providers/ThemeProvider';
 import Flex, { FlexProps } from '../../atoms/flex/Flex';
 import Highlight from '../../atoms/highlight/Highlight';
@@ -68,7 +67,7 @@ const Entry: FC<EntryProps> = ({
             </Text.Copy>
           </Flex>
           <Icon
-            icon={open ? icons.arrow.up : icons.arrow.down}
+            icon={open ? 'arrow_up' : 'arrow_down'}
             width={15}
             height={15}
             viewBox="0 0 20 20"

@@ -14,7 +14,6 @@ import {
   counterStyles,
   searchStyles,
 } from './styles';
-import icons from '../../../assets/icons';
 import Flex from '../../atoms/flex/Flex';
 import Input from '../../atoms/input/Input';
 import NoData from '../noData/noData';
@@ -60,7 +59,7 @@ const EntryList: FC<EntryListProps> = ({
     <Flex flexDirection="column" style={containerStyles(theme)}>
       <Flex style={searchStyles(theme)} width="100%">
         <Input
-          icon={icons.search}
+          icon="search"
           onChange={setSearch}
           placeholder="find an operation..."
         />

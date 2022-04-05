@@ -4,7 +4,6 @@ import { useTheme } from '../../../../../providers/ThemeProvider';
 import Flex from '../../../../atoms/flex/Flex';
 import Icon from '../../../../atoms/icon/Icon';
 import { containerStyles, buttonStyles, previewStyles } from './styles';
-import icons from '../../../../../assets/icons';
 
 export interface CodeAnnotationsProps {
   content: string;
@@ -26,6 +25,8 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState('');
   const [showSelection, setShowSelection] = useState(false);
+  const [buttonHovered, setButtonHovered] = useState(false);
+  const [previewHovered, setpreviewHovered] = useState(false);
 
   useEffect(() => {
     onPrevSelection(showSelection);
@@ -58,6 +59,11 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
     [onClose, togglePreview],
   );
 
+  const handleLeavePreview = useCallback(() => {
+    debouncedsetShowSelection(false);
+    setpreviewHovered(false);
+  }, [debouncedsetShowSelection]);
+
   return (
     <Flex style={containerStyles(theme)}>
       {loading && <Flex>previewing...</Flex>}
@@ -65,12 +71,19 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
         <Flex
           onClick={(ev) => togglePreview(ev, true)}
           style={buttonStyles(theme)}
+          onMouseEnter={() => setButtonHovered(true)}
+          onMouseLeave={() => setButtonHovered(false)}
         >
           <Icon
             width={17}
             height={18}
             viewBox="0 0 13 9"
-            icon={isSelection ? icons.playSelection : icons.playAll}
+            fill={
+              buttonHovered
+                ? theme.palette.primary.main
+                : theme.palette.primary.highlight
+            }
+            icon={isSelection ? 'playSelection' : 'playAll'}
           />
         </Flex>
       )}
@@ -80,10 +93,11 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
             close
           </Flex>
           <Flex
+            onMouseLeave={handleLeavePreview}
+            onMouseEnter={() => setpreviewHovered(true)}
             onMouseDown={() => setShowSelection(true)}
             onMouseUp={() => debouncedsetShowSelection(false)}
-            onMouseLeave={() => debouncedsetShowSelection(false)}
-            style={previewStyles}
+            style={previewStyles(theme, previewHovered)}
           >
             {preview}
           </Flex>
