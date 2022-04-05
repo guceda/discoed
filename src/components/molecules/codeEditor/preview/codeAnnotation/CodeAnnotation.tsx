@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent, useEffect } from 'react';
+import { FC, useState, MouseEvent, useEffect, useCallback } from 'react';
 import getPreview from 'static-query-analyzer';
 import { useTheme } from '../../../../../providers/ThemeProvider';
 import Flex from '../../../../atoms/flex/Flex';
@@ -27,19 +27,32 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
     onPrevSelection(showSelection);
   }, [onPrevSelection, showSelection]);
 
-  const togglePreview = (ev: MouseEvent<HTMLDivElement>, preview: boolean) => {
-    setExec(preview);
-    ev.stopPropagation();
-    if (preview) {
-      setLoading(true);
-      setPreview(getPreview(content));
-      setTimeout(() => setLoading(false), 500);
-    }
-    setPreviewing((prev) => preview || !prev);
-  };
+  const togglePreview = useCallback(
+    (ev: MouseEvent<HTMLDivElement>, preview: boolean) => {
+      setExec(preview);
+      ev.stopPropagation();
+      if (preview) {
+        setLoading(true);
+        setPreview(getPreview(content));
+        setTimeout(() => setLoading(false), 500);
+      }
+      setPreviewing((prev) => preview || !prev);
+    },
+    [content, setExec],
+  );
 
-  const debouncedsetShowSelection = (show: boolean) =>
-    setTimeout(() => setShowSelection(show), 200);
+  const debouncedsetShowSelection = useCallback(
+    (show: boolean) => setTimeout(() => setShowSelection(show), 200),
+    [],
+  );
+
+  const handleCloseClick = useCallback(
+    (ev) => {
+      togglePreview(ev, false);
+      onClose();
+    },
+    [onClose, togglePreview],
+  );
 
   return (
     <Flex style={containerStyles(theme)}>
@@ -54,13 +67,7 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
       )}
       {!loading && previewing && (
         <>
-          <Flex
-            style={buttonStyles(theme)}
-            onClick={(ev) => {
-              togglePreview(ev, false);
-              onClose();
-            }}
-          >
+          <Flex style={buttonStyles(theme)} onClick={handleCloseClick}>
             close
           </Flex>
           <Flex
