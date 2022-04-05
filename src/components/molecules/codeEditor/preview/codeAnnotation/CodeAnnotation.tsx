@@ -2,10 +2,13 @@ import { FC, useState, MouseEvent, useEffect, useCallback } from 'react';
 import getPreview from 'static-query-analyzer';
 import { useTheme } from '../../../../../providers/ThemeProvider';
 import Flex from '../../../../atoms/flex/Flex';
+import Icon from '../../../../atoms/icon/Icon';
 import { containerStyles, buttonStyles, previewStyles } from './styles';
+import icons from '../../../../../assets/icons';
 
 export interface CodeAnnotationsProps {
   content: string;
+  isSelection?: boolean;
   setExec: (value: boolean) => void;
   onClose: () => void;
   onPrevSelection: (show: boolean) => void;
@@ -15,6 +18,7 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
   content,
   setExec,
   onClose,
+  isSelection,
   onPrevSelection,
 }) => {
   const theme = useTheme();
@@ -62,7 +66,12 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
           onClick={(ev) => togglePreview(ev, true)}
           style={buttonStyles(theme)}
         >
-          preview
+          <Icon
+            width={17}
+            height={18}
+            viewBox="0 0 13 9"
+            icon={isSelection ? icons.playSelection : icons.playAll}
+          />
         </Flex>
       )}
       {!loading && previewing && (

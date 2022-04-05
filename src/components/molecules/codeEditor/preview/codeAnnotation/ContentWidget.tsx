@@ -117,11 +117,14 @@ const contentWidget = (
     const data = this.getSelectedQuery();
     const exec = this.setExecution.bind(this);
     const removeSelf = this.removeSelf.bind(this);
+    const selection = editor.getSelection();
+    const isEmptySelection = selection?.isEmpty();
     const cmp = (
       <CodeAnnotation
         onPrevSelection={(show) =>
           show ? this.highlightSelection() : this.hideSelection()
         }
+        isSelection={!isEmptySelection}
         onClose={removeSelf}
         setExec={exec}
         content={data}

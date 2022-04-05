@@ -14,7 +14,7 @@ import {
   counterStyles,
   searchStyles,
 } from './styles';
-import * as icons from '../../../assets/icons';
+import icons from '../../../assets/icons';
 import Flex from '../../atoms/flex/Flex';
 import Input from '../../atoms/input/Input';
 import NoData from '../noData/noData';
