@@ -69,6 +69,7 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
       {loading && <Flex>previewing...</Flex>}
       {!loading && !previewing && (
         <Flex
+          title={isSelection ? 'play current selection' : 'play until here'}
           onClick={(ev) => togglePreview(ev, true)}
           style={buttonStyles(theme)}
           onMouseEnter={() => setButtonHovered(true)}
@@ -89,7 +90,11 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
       )}
       {!loading && previewing && (
         <>
-          <Flex style={buttonStyles(theme)} onClick={handleCloseClick}>
+          <Flex
+            title="hide preview"
+            style={buttonStyles(theme)}
+            onClick={handleCloseClick}
+          >
             close
           </Flex>
           <Flex
