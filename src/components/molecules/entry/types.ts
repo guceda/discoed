@@ -14,9 +14,11 @@ export enum EntryProperties {
   'description' = 'description',
   'highlights' = 'highlights',
   'score' = 'score',
+  'category' = 'category',
 }
 
 export interface EntryType {
+  [EntryProperties.category]: string;
   [EntryProperties.command]: string;
   [EntryProperties.params]?: string[];
   [EntryProperties.commandType]?: CommandType;

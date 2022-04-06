@@ -26,3 +26,4 @@ export const descriptionStyles = (hover: boolean): CSSProperties => {
       };
 };
 export const descriptionContainerStyles = { gap: 10 } as CSSProperties;
+export const categoryStyles = { justifyContent: 'flex-end' } as CSSProperties;

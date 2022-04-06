@@ -8,6 +8,7 @@ import Text from '../../atoms/text/Text';
 import {
   containerStyles,
   descriptionStyles,
+  categoryStyles,
   descriptionContainerStyles,
 } from './styles';
 import './styles.css';
@@ -31,6 +32,7 @@ const Entry: FC<EntryProps> = ({
   params = [],
   description,
   score,
+  category,
 }) => {
   const theme = useTheme();
   const [hover, setHover] = useState(false);
@@ -81,6 +83,14 @@ const Entry: FC<EntryProps> = ({
             <Highlight search={search}>{description}</Highlight>
           </Text.CopySmall>
           {score && <Text.CopySmall>{score.toFixed(3)}</Text.CopySmall>}
+        </Flex>
+        <Flex style={categoryStyles}>
+          <Text.CopySmall
+            weight={TextualWeights.regular}
+            color={theme.colors.salmon[600]}
+          >
+            {category}
+          </Text.CopySmall>
         </Flex>
       </Flex>
     </Flex>
