@@ -103,6 +103,7 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
             onMouseDown={() => setShowSelection(true)}
             onMouseUp={() => debouncedsetShowSelection(false)}
             style={previewStyles(theme, previewHovered)}
+            title={preview}
           >
             {preview}
           </Flex>

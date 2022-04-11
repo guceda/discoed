@@ -9,9 +9,10 @@ import List from './components/molecules/list/List';
 import './App.css';
 
 // SELECT COUNT(models) as total_by_brand
-const baseQuery = `SELECT brand as car_brand, model, doors, year,
-SELECT CAST(year AS int) as year_int
-FROM luxury_cars
+const baseQuery = `select brand as car_brand, *,
+select cast(year as int) as year_int,
+select cast(doors as int) as doors_int
+from luxury_cars
 `;
 
 const App: FC = () => {
