@@ -18,11 +18,9 @@ from luxury_cars
 const App: FC = () => {
   useEffect(() => {
     console.log('Model: training');
-    const train = async () => {
-      const res = await SemanticSearchService.train(entries);
-      console.log(`Model: ${res.status}`);
-    };
-    train();
+    SemanticSearchService.train(entries)
+      .then((res) => console.log(`Model: ${res.status}`))
+      .catch((err) => console.log(`Model: ${err}`));
   }, []);
 
   return (
