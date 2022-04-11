@@ -64,6 +64,15 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
     setpreviewHovered(false);
   }, [debouncedsetShowSelection]);
 
+  const handleMouseEnter = useCallback(() => setpreviewHovered(true), []);
+
+  const handleMouseDown = useCallback(() => () => setShowSelection(true), []);
+
+  const handleMouseUp = useCallback(
+    () => debouncedsetShowSelection(false),
+    [debouncedsetShowSelection],
+  );
+
   return (
     <Flex style={containerStyles(theme)}>
       {loading && <Flex>previewing...</Flex>}
@@ -99,9 +108,9 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
           </Flex>
           <Flex
             onMouseLeave={handleLeavePreview}
-            onMouseEnter={() => setpreviewHovered(true)}
-            onMouseDown={() => setShowSelection(true)}
-            onMouseUp={() => debouncedsetShowSelection(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
             style={previewStyles(theme, previewHovered)}
             title={preview}
           >

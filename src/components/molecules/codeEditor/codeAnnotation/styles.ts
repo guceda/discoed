@@ -8,10 +8,7 @@ export const containerStyles = (theme: Theme): CSSProperties => ({
   whiteSpace: 'nowrap',
 });
 
-export const buttonStyles = (
-  theme: Theme,
-  // hovered?: boolean,
-): any => ({
+export const buttonStyles = (theme: Theme): any => ({
   cursor: 'pointer',
   paddingRight: theme.spacing.sizes.small,
   textDecoration: 'underline',
