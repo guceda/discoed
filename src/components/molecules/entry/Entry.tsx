@@ -25,7 +25,7 @@ export interface EntryProps extends FlexProps, EntryType {
 }
 
 const Entry: FC<EntryProps> = ({
-  slash = true,
+  slash = false,
   open = false,
   selected = false,
   // highlights,
