@@ -66,7 +66,7 @@ const CodeAnnotation: FC<CodeAnnotationsProps> = ({
 
   const handleMouseEnter = useCallback(() => setpreviewHovered(true), []);
 
-  const handleMouseDown = useCallback(() => () => setShowSelection(true), []);
+  const handleMouseDown = useCallback(() => setShowSelection(true), []);
 
   const handleMouseUp = useCallback(
     () => debouncedsetShowSelection(false),
