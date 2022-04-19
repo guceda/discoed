@@ -1,4 +1,4 @@
-import { FC, FormEvent, useCallback } from 'react';
+import { FormEvent, forwardRef, useCallback } from 'react';
 import { Icons } from '../../../assets/icons';
 import { useTheme } from '../../../providers/ThemeProvider';
 import Flex, { FlexProps } from '../flex/Flex';
@@ -11,24 +11,29 @@ export interface InputProps extends Omit<FlexProps, 'onChange'> {
   placeholder?: string;
 }
 
-const Input: FC<InputProps> = ({ onChange, icon, placeholder }) => {
-  const theme = useTheme();
+const Input = forwardRef<HTMLInputElement | null, InputProps>(
+  ({ onChange, icon, placeholder, ...props }, ref) => {
+    const theme = useTheme();
 
-  const handleChange = useCallback(
-    (event: FormEvent<HTMLInputElement>) => onChange(event.currentTarget.value),
-    [onChange],
-  );
+    const handleChange = useCallback(
+      (event: FormEvent<HTMLInputElement>) =>
+        onChange(event.currentTarget.value),
+      [onChange],
+    );
 
-  return (
-    <Flex flexDirection="row" width="100%" style={containerStyles(theme)}>
-      <Flex style={iconStyles(theme)}>{icon && <Icon icon={icon} />}</Flex>
-      <input
-        style={inputStyles}
-        placeholder={placeholder}
-        onChange={handleChange}
-      />
-    </Flex>
-  );
-};
+    return (
+      <Flex flexDirection="row" width="100%" style={containerStyles(theme)}>
+        <Flex style={iconStyles(theme)}>{icon && <Icon icon={icon} />}</Flex>
+        <input
+          style={inputStyles}
+          placeholder={placeholder}
+          onChange={handleChange}
+          {...props}
+          ref={ref}
+        />
+      </Flex>
+    );
+  },
+);
 
 export default Input;

@@ -10,6 +10,7 @@ import {
   descriptionStyles,
   categoryStyles,
   descriptionContainerStyles,
+  toggleOpenStyles,
 } from './styles';
 import './styles.css';
 import { CommandType, EntryType } from './types';
@@ -18,15 +19,19 @@ export interface EntryProps extends FlexProps, EntryType {
   slash?: boolean;
   open?: boolean;
   onOpen: () => void;
+  onSelect: () => void;
   search?: string;
+  selected?: boolean;
 }
 
 const Entry: FC<EntryProps> = ({
   slash = true,
   open = false,
+  selected = false,
   // highlights,
   search,
   onOpen,
+  onSelect,
   command,
   commandType = CommandType.function,
   params = [],
@@ -42,12 +47,12 @@ const Entry: FC<EntryProps> = ({
 
   return (
     <Flex
-      onClick={onOpen}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       flexDirection="row"
       width="100%"
-      style={containerStyles(theme, hover || open)}
+      style={containerStyles(theme, hover || open, selected)}
+      onClick={onSelect}
     >
       <Text.Copy weight={TextualWeights.bold} color={theme.colors.salmon[600]}>
         {slash ? '/' : ''}
@@ -68,12 +73,14 @@ const Entry: FC<EntryProps> = ({
                 : `(${params.join(', ')})`}
             </Text.Copy>
           </Flex>
-          <Icon
-            icon={open ? 'arrow_up' : 'arrow_down'}
-            width={15}
-            height={15}
-            viewBox="0 0 20 20"
-          />
+          <Flex onClick={onOpen} style={toggleOpenStyles(theme)}>
+            <Icon
+              icon={open ? 'arrow_up' : 'arrow_down'}
+              width={15}
+              height={15}
+              viewBox="0 0 20 20"
+            />
+          </Flex>
         </Flex>
         <Flex style={descriptionContainerStyles}>
           <Text.CopySmall

@@ -7,6 +7,7 @@ import Divider from './components/atoms/divider/Divider';
 import SemanticSearchService from './services/SemanticSearchService';
 import List from './components/molecules/list/List';
 import './App.css';
+import EditorContentProvider from './providers/EditorProvider';
 
 // SELECT COUNT(models) as total_by_brand
 const baseQuery = `select brand as car_brand, *,
@@ -24,17 +25,19 @@ const App: FC = () => {
   }, []);
 
   return (
-    <ThemeProvider>
-      <div className="App">
-        <header className="App-header">
-          <Layout>
-            <List entries={entries} />
-            <Divider />
-            <CodeEditor content={baseQuery} />
-          </Layout>
-        </header>
-      </div>
-    </ThemeProvider>
+    <EditorContentProvider>
+      <ThemeProvider>
+        <div className="App">
+          <header className="App-header">
+            <Layout>
+              <List entries={entries} />
+              <Divider />
+              <CodeEditor content={baseQuery} />
+            </Layout>
+          </header>
+        </div>
+      </ThemeProvider>
+    </EditorContentProvider>
   );
 };
 

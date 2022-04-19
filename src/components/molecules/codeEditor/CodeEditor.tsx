@@ -10,6 +10,7 @@ import contentWidget, {
   WidgetNode,
   WIDGET_ID,
 } from './codeAnnotation/ContentWidget';
+import { useEditor } from '../../../providers/EditorProvider';
 
 export interface CodeEditorProps extends FlexProps {
   content?: string;
@@ -18,6 +19,7 @@ export interface CodeEditorProps extends FlexProps {
 const CodeEditor: FC<CodeEditorProps> = ({ content }) => {
   const theme = useTheme();
   const [line, setLine] = useState(-1);
+  const { dispatch } = useEditor();
 
   const getOwnWidgets = useCallback((editor: editor.IStandaloneCodeEditor) => {
     // eslint-disable-next-line no-underscore-dangle
@@ -115,6 +117,7 @@ const CodeEditor: FC<CodeEditorProps> = ({ content }) => {
   };
 
   const handleEditorDidMount: OnMount = (editor, monaco) => {
+    dispatch(editor);
     editor.onDidChangeModelContent((ev) => handleContentChange(editor, ev));
     editor.onMouseUp(() => handleMouseUp(monaco, editor));
   };

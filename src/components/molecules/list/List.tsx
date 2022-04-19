@@ -12,7 +12,7 @@ import sort from './utils/sort';
 import { RatedEntry } from './utils/rate';
 
 export interface ListProps extends FlexProps {
-  entries: Omit<EntryProps, 'onOpen' | 'open'>[];
+  entries: Omit<EntryProps, 'onOpen' | 'open' | 'onSelect' | 'select'>[];
 }
 
 export const SEARCH_PROPS = ['command', 'description'] as EntryProperties[];
@@ -44,10 +44,8 @@ const List: FC<ListProps> = ({ entries }) => {
 
     // SEMANTIC SEARCH
     (async () => {
-      console.log('Model: searching');
       SemanticSearchService.search(debouncedSearch)
         .then((results) => {
-          console.log('Model: ready');
           const sorted = results.sort((a, b) => b.score - a.score);
           const matchingEntries = sorted.map((res) => ({
             ...entries.find((entry) => entry.command === res.metadata),
