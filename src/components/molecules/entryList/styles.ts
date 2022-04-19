@@ -18,11 +18,6 @@ export const contentStyles = (theme: Theme): CSSProperties => ({
   height: '100%',
 });
 
-export const searchStyles = (theme: Theme): CSSProperties => ({
-  padding: theme.spacing.sizes.medium,
-  gap: theme.spacing.sizes.small,
-});
-
 export const counterStyles = (theme: Theme): CSSProperties => ({
   position: 'absolute',
   bottom: theme.spacing.sizes.xsmall,

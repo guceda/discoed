@@ -8,17 +8,11 @@ import {
 } from 'react';
 import { useTheme } from '../../../providers/ThemeProvider';
 import Entry, { EntryProps } from '../entry/Entry';
-import {
-  containerStyles,
-  contentStyles,
-  counterStyles,
-  searchStyles,
-} from './styles';
+import { containerStyles, contentStyles, counterStyles } from './styles';
 import Flex from '../../atoms/flex/Flex';
-import Input from '../../atoms/input/Input';
-import NoData from '../noData/noData';
-import Blink from '../../atoms/blink/Blink';
+import NoData from '../noData/NoData';
 import Text from '../../atoms/text/Text';
+import Search from '../search/Search';
 
 export interface EntryListProps {
   entries: Omit<EntryProps, 'onOpen' | 'open'>[];
@@ -57,14 +51,7 @@ const EntryList: FC<EntryListProps> = ({
 
   return (
     <Flex flexDirection="column" style={containerStyles(theme)}>
-      <Flex style={searchStyles(theme)} width="100%">
-        <Input
-          icon="search"
-          onChange={setSearch}
-          placeholder="find an operation..."
-        />
-        {searching && <Blink />}
-      </Flex>
+      <Search searching={searching} setSearch={setSearch} />
       <Flex flexDirection="column" style={contentStyles(theme)} ref={listRef}>
         <Flex flexDirection="column" height="100%">
           {entries.length ? (
